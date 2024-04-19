@@ -4,23 +4,44 @@ import { useState } from "react";
 import Logo from "../assets/logo.svg";
 import { NavLink } from "react-router-dom";
 
-function Login() {
+function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword(!showPassword);
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confrimPassword, setConfirmPassword] = useState("");
 
   return (
     <>
       <div className="grid md:grid-cols-12">
         <div className="col-span-4 px-10 flex justify-center h-screen items-center flex-col w-full">
-          <h1 className="text-5xl text-start self-start font-bold">Login</h1>
+          <h1 className="text-5xl text-start self-start font-bold">Register</h1>
           <div className="w-full flex flex-col gap-5 justify-center items-center my-5 mx-5 py-5">
+            <TextField
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your full name"
+              variant="outlined"
+              label="Name"
+              type="text"
+              className="w-full rounded-lg"
+              InputProps={{ sx: { borderRadius: 2 } }}
+            />
+            <TextField
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="A unique username"
+              variant="outlined"
+              label="Username"
+              type="text"
+              className="w-full rounded-lg"
+              InputProps={{ sx: { borderRadius: 2 } }}
+            />
             <TextField
               onChange={(e) => setEmail(e.target.value)}
               variant="outlined"
-              label="Email"
               placeholder="john@example.com"
+              label="Email"
               type="email"
               className="w-full rounded-lg"
               InputProps={{ sx: { borderRadius: 2 } }}
@@ -29,7 +50,33 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               variant="outlined"
               label="Password"
-              placeholder="Your password"
+              type={showPassword ? "text" : "password"}
+              className="w-full rounded-lg"
+              placeholder="A strong password"
+              InputProps={{
+                sx: { borderRadius: 2 },
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      color="primary"
+                      edge="end"
+                      onClick={togglePassword}
+                    >
+                      {showPassword ? (
+                        <Icon icon={"ph:eye-slash"} />
+                      ) : (
+                        <Icon icon={"ph:eye"} />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <TextField
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              variant="outlined"
+              label="Confirm Password"
+              placeholder="Your strong password again"
               type={showPassword ? "text" : "password"}
               className="w-full rounded-lg"
               InputProps={{
@@ -52,13 +99,12 @@ function Login() {
               }}
             />
           </div>
-          <div className="flex justify-between items-center w-full">
-            <Button variant="text">Forgot your password?</Button>
-            <Button variant="contained">Login</Button>
+          <div className="flex justify-end items-center w-full">
+            <Button variant="contained">Register</Button>
           </div>
           <div className="justify-self-end bottom-20 absolute">
-            <NavLink to="/register">
-              <Button variant="text">Don't have an account? Register</Button>
+            <NavLink to="/login">
+              <Button variant="text">Have an account? Login</Button>
             </NavLink>
           </div>
         </div>
@@ -70,4 +116,5 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
+
