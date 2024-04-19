@@ -14,7 +14,7 @@ function App() {
           <div className="w-full flex flex-col gap-2 justify-center items-center my-5 mx-5 py-5">
             <TextField
               variant="outlined"
-              label="email"
+              label="Email"
               type="email"
               className="w-full rounded-lg"
               InputProps={{ sx: { borderRadius: 2 } }}
