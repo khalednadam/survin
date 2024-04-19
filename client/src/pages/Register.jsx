@@ -7,13 +7,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const [showPassword, setShowPassword] = useState(false);
-  const togglePassword = () => setShowPassword(!showPassword);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confrimPassword, setConfirmPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => setShowPassword(!showPassword);
+
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   const navigate = useNavigate();
 
@@ -102,7 +106,7 @@ function Register() {
               variant="outlined"
               label="Confirm Password"
               placeholder="Your strong password again"
-              type={showPassword ? "text" : "password"}
+              type={showConfirmPassword ? "text" : "password"}
               className="w-full rounded-lg"
               InputProps={{
                 sx: { borderRadius: 2 },
@@ -111,9 +115,9 @@ function Register() {
                     <IconButton
                       color="primary"
                       edge="end"
-                      onClick={togglePassword}
+                      onClick={toggleConfirmPassword}
                     >
-                      {showPassword ? (
+                      {showConfirmPassword ? (
                         <Icon icon={"ph:eye-slash"} />
                       ) : (
                         <Icon icon={"ph:eye"} />
