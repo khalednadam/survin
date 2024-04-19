@@ -17,7 +17,7 @@ function App() {
               label="Email"
               type="email"
               className="w-full rounded-lg"
-              InputProps={{ sx: { borderRadius: 2 } }}
+              InputProps={{ sx: { borderRadius: 3 } }}
             />
             <TextField
               variant="outlined"
