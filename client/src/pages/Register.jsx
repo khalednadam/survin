@@ -3,6 +3,8 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Logo from "../assets/logo.svg";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +14,29 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confrimPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const register = () => {
+    axios.post(`api/auth/register`, {
+      name,
+      username,
+      email,
+      password
+    }, {
+        withCredentials: true
+      }).then(() => {
+        console.log("registered");
+        setUsername("");
+        setConfirmPassword("");
+        setName("");
+        setPassword("");
+        setEmail("");
+       navigate("/login"); 
+      }).catch(() => {
+        console.log("Something went wrong");
+      })
+  }
 
   return (
     <>
@@ -100,7 +125,7 @@ function Register() {
             />
           </div>
           <div className="flex justify-end items-center w-full">
-            <Button variant="contained">Register</Button>
+            <Button onClick={register} variant="contained">Register</Button>
           </div>
           <div className="justify-self-end bottom-20 absolute">
             <NavLink to="/login">
