@@ -2,8 +2,13 @@ const httpStatus = require("http-status");
 const { surveyService } = require("../services");
 const catchAsync = require("../utils/catchAsync");
 const pick = require("../utils/pick");
+const { ApiError } = require("@google-cloud/storage");
 
 const createSurvey = catchAsync(async (req, res) => {
+  if (!req.session.user) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Please login")
+  }
+  req.body.owner = req.session.user.id;
   const survey = await surveyService.createSurvey(req.body);
   res.status(httpStatus.CREATED).send(survey);
 });

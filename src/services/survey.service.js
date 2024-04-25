@@ -46,7 +46,7 @@ const querySurvies = async (filter, options) => {
  * @returns {Promise<Object>}
  */
 const deleteSurvey = async (surveyId) => {
-  const deletedSurvey = await Survey.deleteOne(surveyId)
+  const deletedSurvey = await Survey.deleteOne({ _id: surveyId })
   return deletedSurvey;
 }
 
