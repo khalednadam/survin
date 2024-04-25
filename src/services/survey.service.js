@@ -22,7 +22,7 @@ const createSurvey = async (surveyBody) => {
  * @returns {Promise<Object>}
  */
 const getSurvey = async (surveyId) => {
-  const survey = await Survey.findById(surveyId);
+  const survey = await Survey.findById(surveyId).populate('owner');
   return survey;
 }
 
@@ -33,7 +33,7 @@ const getSurvey = async (surveyId) => {
  * @returns {Promise<Object>} A promise that resolves to an object containing paginated survey results.
  */
 const querySurvies = async (filter, options) => {
-  const survies = await Survey.paginate(filter, options);
+  const survies = await Survey.paginate(filter, options).populate('owner');
   return survies;
 }
 

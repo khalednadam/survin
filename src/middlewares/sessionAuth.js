@@ -9,7 +9,7 @@ const sessionAuth = async (req, res, next) => {
     return res.status(401).json({ message: 'id is required' });
   }
   const survey = await surveyService.getSurvey(surveyId);
-  const isOwner = survey.owner.toString() === req.session.user.id;
+  const isOwner = survey.owner.id.toString() === req.session.user.id;
   if (!isOwner) {
     return res.status(401).json({ message: 'you are not a member of this board' });
   }
