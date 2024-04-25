@@ -33,7 +33,8 @@ const getSurvey = async (surveyId) => {
  * @returns {Promise<Object>} A promise that resolves to an object containing paginated survey results.
  */
 const querySurvies = async (filter, options) => {
-  const survies = await Survey.paginate(filter, options).populate('owner');
+  options.populate = options.populate ? `owner` : 'owner';
+  const survies = await Survey.paginate(filter, options);
   return survies;
 }
 
