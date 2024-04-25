@@ -2,7 +2,7 @@ const httpStatus = require("http-status");
 const { surveyService } = require("../services");
 const catchAsync = require("../utils/catchAsync");
 const pick = require("../utils/pick");
-const { ApiError } = require("@google-cloud/storage");
+const { ApiError } = require("../utils/ApiError");
 
 const createSurvey = catchAsync(async (req, res) => {
   if (!req.session.user) {
