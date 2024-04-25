@@ -2,6 +2,18 @@ const mongoose = require("mongoose");
 const { toJSON, paginate } = require("./plugins");
 
 const schema = mongoose.Schema;
+const fieldSchema = mongoose.Schema({
+  label: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ["text", "textarea", "radio", "checkbox", "dropdown", "rating", "date", "file", "email", "number", "phone number"],
+    required: true,
+  },
+  options: [String], // Only required for fields like radio, checkbox, and dropdown
+});
 const surveySchema = mongoose.Schema(
   {
     title: {
@@ -12,13 +24,7 @@ const surveySchema = mongoose.Schema(
       type: schema.Types.ObjectId,
       ref: "User"
     },
-    fields: [
-      {
-        type: schema.Types.ObjectId,
-        ref: "Field",
-        required: true
-      }
-    ],
+    fields: [fieldSchema],
     isClosed: {
       type: Boolean,
       default: false
@@ -38,6 +44,5 @@ surveySchema.plugin(toJSON);
 surveySchema.plugin(paginate);
 const Survey = mongoose.model("Survey", surveySchema);
 
-// plugin to convert mongoose to JSON
 
 module.exports = Survey;
