@@ -3,12 +3,36 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Logo from "../assets/logo.svg";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword(!showPassword);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const login = () => {
+    axios
+      .post(
+        `api/auth/login`,
+        {
+          name,
+          username,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log("logged in");
+        console.log(res.data);
+      })
+      .catch(() => {
+        console.log("Something went wrong");
+      });
+  };
 
   return (
     <>

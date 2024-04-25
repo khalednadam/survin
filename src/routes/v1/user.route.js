@@ -31,6 +31,9 @@ router
 
 router.route("/getUsers").get(userController.searchUsers);
 router.route("/deleteProfilePic/:userId").put(userController.deleteProfilePic);
+router
+  .route("/user")
+  .get(validate(userValidation.getCurrentUser), userController.getCurrentUser);
 router.route("/usersByMonth").get(userController.getUsersGroupedByMonth);
 router
   .route("/:userId")
