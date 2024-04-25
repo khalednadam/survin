@@ -37,6 +37,5 @@ module.exports = {
   createResponse,
   getResponsesForSurvey,
   getResponsesByUser,
-  deleteResponsesForSurvey
 };
 
