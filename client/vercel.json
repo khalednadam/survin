@@ -1,0 +1,7 @@
+{
+"rewrites": [
+    { "source": "/api/(.*)", "destination": "https:///https://totask-server-2.onrender.com/v1/:1" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
+
