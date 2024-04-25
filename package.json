@@ -8,7 +8,7 @@
     "dev": "nodemon src/index.js",
     "server": "nodemon src/index.js --ignore client",
     "build-client": "cd client && npm run build",
-    "start": "concurrently -kill-others-on-fail \"npm run server\" \" cd client && npm run dev\"",
+		"start": "node src/index.js",
     "setup-production": "npm run install-client && npm run build-client && npm install",
     "install-client": "cd client && npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
