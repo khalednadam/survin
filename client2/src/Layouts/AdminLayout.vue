@@ -5,13 +5,8 @@ import { useRouter } from "vue-router";
 import { useDisplay } from "vuetify";
 import { Icon } from "@iconify/vue";
 import { useCurrentUser } from "@/stores/auth";
-import { useWorkspaces } from "@/stores/workspaces";
-import CreateWorkspace from "@/components/Modals/CreateWorkspaceModal.vue";
-import AddMemberToWorkspaceModal from "@/components/Modals/AddMemberToWorkspaceModal.vue";
-import WorkspaceListItem from "../components/WorkspaceListItem.vue";
 import Header from "../components/Admin/Header.vue";
 import LogoutBtn from "../components/LogoutBtn.vue";
-import { getWorkspaces, useUser } from "../composables/utils";
 
 // env
 
@@ -21,7 +16,6 @@ const router = useRouter();
 const authStore = useCurrentUser();
 
 // REFS
-const createWorkspaceDialog = ref(false);
 const addMembersDialog = ref(false);
 const drawer = ref(mdAndUp.value ? true : false);
 
@@ -82,12 +76,6 @@ onMounted(() => {
         <slot></slot>
       </div>
       <!-- </v-container> -->
-      <v-dialog v-model="createWorkspaceDialog">
-        <CreateWorkspace @toggle-modal="() => (createWorkspaceDialog = false)" />
-      </v-dialog>
-      <v-dialog v-model="addMembersDialog">
-        <AddMemberToWorkspaceModal :workspaceInfo="workspaceInfo" @toggle-modal="() => (addMembersDialog = false)" />
-      </v-dialog>
     </v-main>
   </div>
 </template>

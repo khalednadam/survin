@@ -125,7 +125,7 @@ router.beforeEach(async (to, from, next) => {
     }
     // Redirect non-admin users away from admin-only pages
     // if (to.meta.admin && !isAdmin) {
-    //   next({ name: "boards" });
+    //   next({ name: "main" });
     //   return;
     // }
     // if (!to.meta.admin && isAdmin) {
