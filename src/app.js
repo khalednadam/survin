@@ -9,6 +9,7 @@ const session = require("express-session");
 const config = require("./config/config");
 const { userService } = require("./services");
 const { User } = require("./models");
+const path = require("path");
 const app = express();
 const localStrategy = require("passport-local");
 app.use(express.json());
@@ -48,5 +49,11 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use("/v1", routes);
+const frontendPath = path.join(__dirname, "../client/dist/");
+// Serve index.html for all non-static routes
+app.use(express.static(frontendPath));
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(frontendPath));
+});
 
 module.exports = app;
