@@ -3,15 +3,14 @@ const { toJSON, paginate } = require("./plugins");
 
 const responseSchema = mongoose.Schema(
   {
-    surveyId: {
+    survey: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Survey",
       required: true
     },
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
     },
     answers: [
       {

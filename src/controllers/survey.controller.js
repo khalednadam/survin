@@ -18,11 +18,11 @@ const getSurvey = catchAsync(async (req, res) => {
   res.send(survey);
 });
 
-const querySurvies = catchAsync(async (req, res) => {
+const querySurveys = catchAsync(async (req, res) => {
   const filter = pick(req.query, ["title", "ownder"]);
   const options = pick(req.query, ["sort", "limit", "page"]);
-  const survies = await surveyService.querySurvies(filter, options);
-  res.send(survies);
+  const surveys = await surveyService.querySurveys(filter, options);
+  res.send(surveys);
 });
 
 const deleteSurvey = catchAsync(async (req, res) => {
@@ -34,6 +34,6 @@ const deleteSurvey = catchAsync(async (req, res) => {
 module.exports = {
   createSurvey,
   getSurvey,
-  querySurvies,
+  querySurveys,
   deleteSurvey
 }

@@ -4,7 +4,7 @@ const sessionAuth = require("../../middlewares/sessionAuth");
 const router = express.Router();
 
 router.post("/", surveyController.createSurvey);
-router.get("/survies", surveyController.querySurvies);
+router.get("/surveys", surveyController.querySurveys);
 router.route("/:id")
   .get(surveyController.getSurvey)
   .delete(sessionAuth, surveyController.deleteSurvey);

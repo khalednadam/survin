@@ -32,10 +32,10 @@ const getSurvey = async (surveyId) => {
  * @param {Object} options - The options for pagination and other query settings.
  * @returns {Promise<Object>} A promise that resolves to an object containing paginated survey results.
  */
-const querySurvies = async (filter, options) => {
+const querySurveys = async (filter, options) => {
   options.populate = options.populate ? `owner` : 'owner';
-  const survies = await Survey.paginate(filter, options);
-  return survies;
+  const surveys = await Survey.paginate(filter, options);
+  return surveys;
 }
 
 // const updateSurvey = async (surveyId, surveyBody) => {
@@ -54,6 +54,6 @@ const deleteSurvey = async (surveyId) => {
 module.exports = {
   createSurvey,
   getSurvey,
-  querySurvies,
+  querySurveys,
   deleteSurvey
 }

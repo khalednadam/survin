@@ -1,13 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const MongoStore = require("connect-mongo");
-const bodyParser = require("body-parser");
 const passport = require("passport");
 const { jwtStrategy } = require("./config/passport");
 const routes = require("./routes/v1/index");
 const session = require("express-session");
 const config = require("./config/config");
-const { userService } = require("./services");
 const { User } = require("./models");
 const path = require("path");
 const app = express();
