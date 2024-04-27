@@ -87,6 +87,16 @@ const router = createRouter({
       component: () => import("../views/landing/Blogs.vue"),
     },
     {
+      path: "/survey/:surveyId",
+      name: "survey",
+      meta: {
+        layout: LandingLayout,
+        auth: false,
+        admin: false,
+      },
+      component: () => import("../views/Survey.vue"),
+    },
+    {
       path: "/home/blog/:blogPostId",
       name: "post",
       meta: {
