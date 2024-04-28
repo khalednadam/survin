@@ -13,8 +13,8 @@ import "vuetify/styles";
 import vuetify from "./plugins/vuetify";
 
 // Toast Notification
-// import Toast from "vue-toastification";
-// import "vue-toastification/dist/index.css";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 const app = createApp(App);
 
@@ -37,5 +37,5 @@ const options = {
 app.use(pinia);
 app.use(router);
 app.use(vuetify);
-// app.use(Toast, options);
+app.use(Toast, options);
 app.mount("#app");
