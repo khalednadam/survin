@@ -77,6 +77,16 @@ const router = createRouter({
       },
     },
     {
+      path: "/create-survey",
+      name: "create-survey",
+      component: () => import("../views/CreateSurvey.vue"),
+      meta: {
+        layout: AppLayout,
+        auth: true,
+        admin: false
+      },
+    },
+    {
       path: "/home/blog",
       name: "blogs",
       meta: {
@@ -85,6 +95,16 @@ const router = createRouter({
         admin: false,
       },
       component: () => import("../views/landing/Blogs.vue"),
+    },
+    {
+      path: "/survey/:surveyId",
+      name: "surveyinapp",
+      meta: {
+        layout: AppLayout,
+        auth: true,
+        admin: false,
+      },
+      component: () => import("../views/Survey.vue"),
     },
     {
       path: "/survey/:surveyId",
