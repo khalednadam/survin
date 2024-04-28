@@ -6,6 +6,11 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import Logo from "./Logo.vue";
 
+import { useSurveySearch } from "../stores/surveySearch.js"
+import { storeToRefs } from "pinia";
+
+const surveySearch = useSurveySearch();
+const { searchWord } = storeToRefs(surveySearch);
 const { mdAndUp, smAndDown } = useDisplay();
 const route = useRoute();
 const props = defineProps({
@@ -22,38 +27,18 @@ const emits = defineEmits(["toggleDrawer"]);
     <v-row no-gutters class="items-center my-auto px-5 !py-0 !m-0">
       <v-col cols="5" class="">
         <div class="flex">
-          <v-btn
-            v-if="smAndDown"
-            variant="text"
-            icon
-            rounded="lg"
-            @click="$emit('toggleDrawer')"
-          >
+          <v-btn v-if="smAndDown" variant="text" icon rounded="lg" @click="$emit('toggleDrawer')">
             <Icon icon="ph:list" width="35"></Icon>
           </v-btn>
-          <v-text-field
-            v-if="mdAndUp"
-            v-model="searchWord"
-            clearable=""
-            color="primary"
-            rounded
-            placeholder="Search"
-            hide-details
-            density="compact"
-          >
+          <v-text-field v-if="mdAndUp" v-model="searchWord" clearable="" color="primary" rounded placeholder="Search"
+            hide-details density="compact">
             <template #append-inner>
               <Icon icon="ph:magnifying-glass" width="25"></Icon>
             </template>
           </v-text-field>
           <v-dialog v-if="smAndDown">
             <template v-slot:activator="{ props }">
-              <v-btn
-                v-bind="props"
-                variant="text"
-                icon
-                size="small"
-                rounded="lg"
-              >
+              <v-btn v-bind="props" variant="text" icon size="small" rounded="lg">
                 <Icon icon="ph:magnifying-glass" width="25"></Icon>
               </v-btn>
             </template>
@@ -61,31 +46,18 @@ const emits = defineEmits(["toggleDrawer"]);
               <v-card>
                 <v-card-title> Search for survey </v-card-title>
                 <v-card-text>
-                  <v-text-field
-                    clearable
-                    v-model="searchWord"
-                    variant="outlined"
-                    color="primary"
-                    rounded
-                    placeholder="Search"
-                    hide-details
-                    density="compact"
-                  >
+                  <v-text-field clearable v-model="searchWord" variant="outlined" color="primary" rounded
+                    placeholder="Search" hide-details density="compact">
                     <template #append-inner>
                       <Icon icon="ph:magnifying-glass" width="25"></Icon>
                     </template>
                   </v-text-field>
                   <div class="flex mt-2 justify-end justify-self-end gap-2">
-                    <v-btn
-                      color="primary"
-                      @click="
-                        () => {
-                          searchWord = '';
-                          isActive.value = false;
-                        }
-                      "
-                      variant="outlined"
-                    >
+                    <v-btn color="primary" @click="() => {
+                      searchWord = '';
+                      isActive.value = false;
+                    }
+                      " variant="outlined">
                       Cancel
                     </v-btn>
                     <v-btn color="primary" @click="isActive.value = false">
@@ -100,19 +72,16 @@ const emits = defineEmits(["toggleDrawer"]);
       </v-col>
       <v-col cols="5" class="flex flex-col justify-center">
         <div class="md:space-x-5 space-x-2 px-2 flex items-center">
-          <v-btn
-            color="primary"
-            variant="flat"
-            v-if="mdAndUp"
-            @click="() => {}"
-          >
-            <template #append>
-              <Icon icon="ph:plus-bold" width="20"></Icon>
-            </template>
-            <p class="flex justify-center items-center font-bold">
-              Create New Survey
-            </p>
-          </v-btn>
+          <router-link to="/create-survey">
+            <v-btn color="primary" variant="flat" v-if="mdAndUp" @click="() => { }">
+              <template #append>
+                <Icon icon="ph:plus-bold" width="20"></Icon>
+              </template>
+              <p class="flex justify-center items-center font-bold">
+                Create New Survey
+              </p>
+            </v-btn>
+          </router-link>
         </div>
       </v-col>
       <v-col cols="2">
