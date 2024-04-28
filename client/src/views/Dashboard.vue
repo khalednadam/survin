@@ -44,12 +44,12 @@ watch(searchWord, debounce(() => {
 <template>
   <h1>Your surveys</h1>
   <v-row class="mt-8" v-if="loading">
-    <v-col cols="4" v-for="i in 9">
+    <v-col cols="12" md="4" v-for="i in 9">
       <v-skeleton-loader type="card"></v-skeleton-loader>
     </v-col>
   </v-row>
   <v-row class="mt-8" v-else>
-    <v-col cols="4" v-for="survey in surveys.results" :key="survey._id">
+    <v-col cols="12" md="4" v-for="survey in surveys.results" :key="survey._id">
       <SurveyCard :title="survey.title" :fields-count="survey.fields.length" :created-at="survey.createdAt"
         :id="survey._id" />
     </v-col>
