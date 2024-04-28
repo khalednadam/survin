@@ -1,4 +1,6 @@
 <script setup>
+import { PhoneInput } from '@lbgm/phone-number-input';
+import '@lbgm/phone-number-input/style';
 const model = defineModel();
 const props = defineProps({
   type: String,
@@ -17,7 +19,7 @@ const props = defineProps({
   <v-textarea v-else-if="type === 'textarea'" v-model="model" :label="label">
   </v-textarea>
   <v-radio-group :label="label" v-else-if="type === 'radio'">
-    <v-radio v-for="option in options" :value="option" :label="option">
+    <v-radio color="primary" v-for="option in options" :value="option" :label="option">
     </v-radio>
   </v-radio-group>
   <v-select v-if="type === 'dropdown'" :label="label" :items="options"></v-select>
@@ -33,11 +35,24 @@ const props = defineProps({
       {{ label }}
     </p>
     <div class="flex gap-5 items-center justify-start flex-row">
-      <v-checkbox v-for="option in options" :key="option" :label="option">
+      <v-checkbox color="primary" v-for="option in options" :key="option" :label="option">
       </v-checkbox>
     </div>
   </div>
   <v-text-field v-if="type === 'number'" type="number" :label="label"></v-text-field>
   <v-date-picker v-if="type === 'date'" color="primary" :title="label"></v-date-picker>
   <v-file-input v-if="type === 'file'" :label="label"></v-file-input>
+  <PhoneInput id="phone" v-if="type === 'phone number'" :label="label"></PhoneInput>
 </template>
+<style >
+#phone>div>div {
+  background-color: rgba(var(--v-theme-background)) !important;
+}
+
+#phone>div>label {
+  font-family: "Lato", sans-serif !important;
+  opacity: 0.5 !important;
+  font-weight: normal !important;
+}
+</style>
+
