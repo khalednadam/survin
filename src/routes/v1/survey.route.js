@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/", surveyController.createSurvey);
 router.get("/surveys", surveyController.querySurveys);
+router.get("/my-surveys", surveyController.queryMySurveys);
 router.route("/:id")
   .get(surveyController.getSurvey)
   .delete(sessionAuth, surveyController.deleteSurvey);

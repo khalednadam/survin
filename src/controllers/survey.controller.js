@@ -19,11 +19,21 @@ const getSurvey = catchAsync(async (req, res) => {
 });
 
 const querySurveys = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ["title", "ownder"]);
+  const filter = pick(req.query, ["title", "owner"]);
   const options = pick(req.query, ["sort", "limit", "page"]);
   const surveys = await surveyService.querySurveys(filter, options);
   res.send(surveys);
 });
+
+const queryMySurveys = catchAsync(async (req, res) => {
+  const filter = { owner: req.session.user.id };
+  if (req.query.title && req.query.title.trim().length > 1) {
+    filter.title = { $regex: req.query.title, $options: 'i' };
+  }
+  const options = pick(req.query, ["sortBy", "limit", "page"]);
+  const surveys = await surveyService.querySurveys(filter, options);
+  res.send(surveys);
+})
 
 const deleteSurvey = catchAsync(async (req, res) => {
   const survey = await surveyService.deleteSurvey(req.params.id);
@@ -35,5 +45,6 @@ module.exports = {
   createSurvey,
   getSurvey,
   querySurveys,
-  deleteSurvey
+  deleteSurvey,
+  queryMySurveys
 }

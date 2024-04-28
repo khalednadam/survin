@@ -21,26 +21,12 @@ onMounted(() => {
 
 <template>
   <div>
-    <v-navigation-drawer
-      :permanent="mdAndUp"
-      v-model="drawer"
-      location="left"
-      v-if="authStore.user"
-      color="base"
-    >
+    <v-navigation-drawer :permanent="mdAndUp" v-model="drawer" location="left" v-if="authStore.user" color="base">
       <template v-slot:prepend>
         <router-link to="/settings">
-          <v-list-item
-            link
-            lines="two"
-            :title="authStore.user.name"
-            :subtitle="'@' + authStore.user.username"
-          >
+          <v-list-item link lines="two" :title="authStore.user.name" :subtitle="'@' + authStore.user.username">
             <template #prepend>
-              <v-avatar
-                color="primary"
-                class="ring-white ring-2 border-white border-2"
-              >
+              <v-avatar color="primary" class="ring-white ring-2 border-white border-2">
                 <p v-if="!authStore.user.profilePhotoUrl">
                   {{ authStore.user.name[0].toUpperCase() }}
                 </p>
@@ -52,12 +38,15 @@ onMounted(() => {
       </template>
 
       <v-list class="w-11/12 mx-auto space-y-2">
+        <router-link to="/">
+          <v-list-item color="primary" title="Home" :active="router.currentRoute.value.fullPath === '/'">
+            <template #prepend>
+              <Icon icon="ph:house" width="20"> </Icon>
+            </template>
+          </v-list-item>
+        </router-link>
         <router-link to="/settings">
-          <v-list-item
-            color="primary"
-            title="Settings"
-            :active="router.currentRoute.value.fullPath === '/settings'"
-          >
+          <v-list-item color="primary" title="Settings" :active="router.currentRoute.value.fullPath === '/settings'">
             <template #prepend>
               <Icon icon="ph:gear" width="20"> </Icon>
             </template>
