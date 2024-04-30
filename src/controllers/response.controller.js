@@ -15,6 +15,8 @@ const getResponse = catchAsync(async (req, res) => {
   res.send(response);
 })
 
+// const getResponses
+
 module.exports = {
   createResponse,
   getResponse

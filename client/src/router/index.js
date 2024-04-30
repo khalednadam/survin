@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import AuthLayout from "../Layouts/AuthLayout.vue";
 import AppLayout from "../Layouts/AppLayout.vue";
 import LandingLayout from "../Layouts/LandingLayout.vue";
+import SurveyLayout from "../Layouts/SurveyLayout.vue";
 
 import { createPinia } from "pinia";
 import { useCurrentUser } from "../stores/auth";
@@ -98,20 +99,10 @@ const router = createRouter({
     },
     {
       path: "/survey/:surveyId",
-      name: "surveyinapp",
-      meta: {
-        layout: AppLayout,
-        auth: true,
-        admin: false,
-      },
-      component: () => import("../views/Survey.vue"),
-    },
-    {
-      path: "/survey/:surveyId",
       name: "survey",
       meta: {
-        layout: LandingLayout,
-        auth: false,
+        layout: SurveyLayout,
+        auth: null,
         admin: false,
       },
       component: () => import("../views/Survey.vue"),
@@ -144,12 +135,12 @@ router.beforeEach(async (to, from, next) => {
     currentUserStore.user && currentUserStore.user.role === "admin";
     console.log(isAuth);
     // Redirect unauthenticated users to the home page if the route requires authentication
-    if (to.meta.auth && !isAuth) {
+    if (to.meta.auth === true && !isAuth) {
       next({ name: "home" });
       return;
     }
     // Redirect authenticated users away from non-auth pages
-    if (!to.meta.auth && isAuth) {
+    if (to.meta.auth === false && isAuth) {
       next({ name: "main" });
       return;
     }

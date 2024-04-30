@@ -12,6 +12,11 @@ const fieldSchema = mongoose.Schema({
     enum: ["text", "textarea", "radio", "checkbox", "dropdown", "rating", "date", "file", "email", "number", "phone number"],
     required: true,
   },
+  required: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   options: [String], // Only required for fields like radio, checkbox, and dropdown
 });
 const surveySchema = mongoose.Schema(

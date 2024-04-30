@@ -71,10 +71,23 @@ const getResponsesByUser = async (userId) => {
 }
 
 
+/**
+ * Queries responses based on the provided filter and options.
+ * @param {Object} filter - The filter criteria for querying responses.
+ * @param {Object} options - The options for pagination and other query settings.
+ * @returns {Promise<Object>} A promise that resolves to an object containing paginated response results.
+ */
+const queryResponses = async (filter, options) => {
+  options.populate = options.populate ? `survey` : 'survey';
+  const responses = await Response.paginate(filter, options);
+  return responses;
+}
+
 module.exports = {
   createResponse,
   getResponse,
   getResponsesForSurvey,
   getResponsesByUser,
+  queryResponses
 };
 
