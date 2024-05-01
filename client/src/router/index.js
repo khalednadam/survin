@@ -118,6 +118,16 @@ const router = createRouter({
       component: () => import("../views/landing/BlogPost.vue"),
     },
     {
+      path: "/responses/:surveyId",
+      name: "responses",
+      meta: {
+        layout: AppLayout,
+        auth: true,
+        admin: false,
+      },
+      component: () => import("../views/Responses.vue"),
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "ErrorView",
       component: () => import("../views/Error.vue"),
@@ -133,7 +143,6 @@ router.beforeEach(async (to, from, next) => {
     await currentUserStore.getUser();
     const isAuth = !!currentUserStore.user.id;
     currentUserStore.user && currentUserStore.user.role === "admin";
-    console.log(isAuth);
     // Redirect unauthenticated users to the home page if the route requires authentication
     if (to.meta.auth === true && !isAuth) {
       next({ name: "home" });
