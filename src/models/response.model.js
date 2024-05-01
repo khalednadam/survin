@@ -16,11 +16,11 @@ const responseSchema = mongoose.Schema(
       {
         fieldId: {
           type: mongoose.Schema.Types.ObjectId,
+          ref: "Field",
           required: true
         },
         value: {
           type: mongoose.Schema.Types.Mixed,
-          required: true
         }
       }
     ]

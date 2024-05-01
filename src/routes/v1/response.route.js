@@ -21,5 +21,6 @@ const upload = multer({ storage: storage });
 
 router.post("/", upload.single('file'), responseController.createResponse);
 router.get("/:id", responseController.getResponse);
+router.get("/of/:surveyId", responseController.queryResponsesBySurvey);
 
 module.exports = router;
