@@ -21,7 +21,6 @@ if (config.env !== "test") {
       );
     });
 }
-// TODO: add CSRF token
 
 /**
  * login with email and password
