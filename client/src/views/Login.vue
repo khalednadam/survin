@@ -77,41 +77,22 @@ const login = handleSubmit(async () => {
       <div>
         <p>Email</p>
       </div>
-      <v-text-field
-        autofocus
-        @keydown.enter="() => passwordField.focus()"
-        v-model="email.value.value"
-        :error-messages="email.errorMessage.value"
-      ></v-text-field>
+      <v-text-field autofocus @keydown.enter="() => passwordField.focus()" v-model="email.value.value"
+        :error-messages="email.errorMessage.value"></v-text-field>
       <div class="w-full flex justify-between">
         <p>Password</p>
         <router-link to="/forgot-password">
           <p class="cursor-pointer">forgot your passowrd?</p>
         </router-link>
       </div>
-      <v-text-field
-        :rules="rules"
-        @keydown.enter="login"
-        ref="passwordField"
-        :error-messages="password.errorMessage.value"
-        v-model="password.value.value"
-        :type="showPassword ? 'text' : 'password'"
-      >
+      <v-text-field :rules="rules" @keydown.enter="login" ref="passwordField"
+        :error-messages="password.errorMessage.value" v-model="password.value.value"
+        :type="showPassword ? 'text' : 'password'">
         <template #append-inner>
-          <Icon
-            @click="() => (showPassword = !showPassword)"
-            icon="ph:eye-closed-bold"
-            width="30"
-            class="cursor-pointer"
-            v-if="showPassword"
-          />
-          <Icon
-            @click="() => (showPassword = !showPassword)"
-            icon="ph:eye-bold"
-            width="30"
-            class="cursor-pointer"
-            v-else
-          />
+          <Icon @click="() => (showPassword = !showPassword)" icon="ph:eye-closed-bold" width="30" class="cursor-pointer"
+            v-if="showPassword" />
+          <Icon @click="() => (showPassword = !showPassword)" icon="ph:eye-bold" width="30" class="cursor-pointer"
+            v-else />
         </template>
       </v-text-field>
       <div>
@@ -122,14 +103,8 @@ const login = handleSubmit(async () => {
           </span>
         </p>
       </div>
-      <v-btn
-        class="self-end"
-        @click="() => login()"
-        variant="tonal"
-        color="primary"
-        :loading="isLoading"
-        :disabled="isLoading"
-      >
+      <v-btn class="self-end" @click="() => login()" variant="tonal" color="primary" :loading="isLoading"
+        :disabled="isLoading">
         Login
       </v-btn>
     </v-form>

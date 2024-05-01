@@ -1,7 +1,6 @@
 <script setup>
 // IMPORTS
 import { ref } from "vue";
-import axios from "axios";
 import { useRouter } from "vue-router";
 import { useForm, useField } from "vee-validate";
 import { Icon } from "@iconify/vue";
@@ -9,8 +8,6 @@ import { useCurrentUser } from "../stores/auth";
 import { toastError } from "../composables/helper";
 import axiosInstance from "../composables/axios";
 
-// env
-const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 // INITS
 const router = useRouter();
@@ -126,76 +123,38 @@ const register = handleSubmit(async () => {
       <div>
         <p>Name</p>
       </div>
-      <v-text-field
-        autofocus
-        v-model="name.value.value"
-        :error-messages="name.errorMessage.value"
-      ></v-text-field>
+      <v-text-field autofocus v-model="name.value.value" :error-messages="name.errorMessage.value"></v-text-field>
       <div>
         <p>Username</p>
       </div>
-      <v-text-field
-        v-model="username.value.value"
-        :error-messages="username.errorMessage.value"
-        prefix="@"
-      ></v-text-field>
+      <v-text-field v-model="username.value.value" :error-messages="username.errorMessage.value"
+        prefix="@"></v-text-field>
       <div>
         <p>Email</p>
       </div>
-      <v-text-field
-        v-model="email.value.value"
-        :error-messages="email.errorMessage.value"
-      ></v-text-field>
+      <v-text-field v-model="email.value.value" :error-messages="email.errorMessage.value"></v-text-field>
       <div class="w-full flex justify-between">
         <p>Password</p>
       </div>
-      <v-text-field
-        :rules="rules"
-        v-model="password.value.value"
-        :error-messages="password.errorMessage.value"
-        :type="showPassword ? 'text' : 'password'"
-      >
+      <v-text-field :rules="rules" v-model="password.value.value" :error-messages="password.errorMessage.value"
+        :type="showPassword ? 'text' : 'password'">
         <template #append-inner>
-          <Icon
-            @click="() => (showPassword = !showPassword)"
-            icon="ph:eye-closed-bold"
-            width="30"
-            class="cursor-pointer"
-            v-if="showPassword"
-          />
-          <Icon
-            @click="() => (showPassword = !showPassword)"
-            icon="ph:eye-bold"
-            width="30"
-            class="cursor-pointer"
-            v-else
-          />
+          <Icon @click="() => (showPassword = !showPassword)" icon="ph:eye-closed-bold" width="30" class="cursor-pointer"
+            v-if="showPassword" />
+          <Icon @click="() => (showPassword = !showPassword)" icon="ph:eye-bold" width="30" class="cursor-pointer"
+            v-else />
         </template>
       </v-text-field>
       <div class="w-full flex justify-between">
         <p>Confirm password</p>
       </div>
-      <v-text-field
-        :rules="rules"
-        v-model="confirmPassword.value.value"
-        :error-messages="confirmPassword.errorMessage.value"
-        :type="showConfirmPassword ? 'text' : 'password'"
-      >
+      <v-text-field :rules="rules" v-model="confirmPassword.value.value"
+        :error-messages="confirmPassword.errorMessage.value" :type="showConfirmPassword ? 'text' : 'password'">
         <template #append-inner>
-          <Icon
-            @click="() => (showConfirmPassword = !showConfirmPassword)"
-            icon="ph:eye-closed-bold"
-            width="30"
-            class="cursor-pointer"
-            v-if="showConfirmPassword"
-          />
-          <Icon
-            @click="() => (showConfirmPassword = !showConfirmPassword)"
-            icon="ph:eye-bold"
-            width="30"
-            class="cursor-pointer"
-            v-else
-          />
+          <Icon @click="() => (showConfirmPassword = !showConfirmPassword)" icon="ph:eye-closed-bold" width="30"
+            class="cursor-pointer" v-if="showConfirmPassword" />
+          <Icon @click="() => (showConfirmPassword = !showConfirmPassword)" icon="ph:eye-bold" width="30"
+            class="cursor-pointer" v-else />
         </template>
       </v-text-field>
       <div>
@@ -206,14 +165,8 @@ const register = handleSubmit(async () => {
           </span>
         </p>
       </div>
-      <v-btn
-        class="self-end"
-        @click="register"
-        variant="tonal"
-        color="primary"
-        :loading="isLoading"
-        :disabled="isLoading"
-      >
+      <v-btn class="self-end" @click="register" variant="tonal" color="primary" :loading="isLoading"
+        :disabled="isLoading">
         Register
       </v-btn>
     </v-form>
