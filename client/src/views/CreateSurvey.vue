@@ -20,7 +20,7 @@ const { text, copy, copied, isSupported } = useClipboard({ link })
 
 const addField = () => {
   currentFieldCount.value++;
-  fields.value.push({ order: currentFieldCount.value, label: "", type: "", options: [] })
+  fields.value.push({ order: currentFieldCount.value, label: "", type: "", options: [], required: false })
 }
 
 const selectField = (order) => {
@@ -48,6 +48,7 @@ const createSurvey = async () => {
 }
 
 </script>
+
 <template>
   <div class="mt-5">
     <v-row class="">
@@ -69,6 +70,9 @@ const createSurvey = async () => {
                   <v-card-text>
                     <h3 :class="field.label.length <= 0 ? 'opacity-50' : 'opacity-100'">
                       {{ field.label.length > 0 ? field.label : "No Label" }}
+                      <span class="text-red font-bold" v-if="field.required">
+                        *
+                      </span>
                     </h3>
                     <p>
                       type: {{ field.type }}
@@ -127,6 +131,8 @@ const createSurvey = async () => {
                   Add option
                 </v-btn>
               </div>
+              <v-checkbox label="required?" color="primary"
+                v-model="fields.find(field => field.order === selectedField).required" />
               <div class="flex space-x-1">
                 <v-btn color="primary" flat class="mt-5" @click="() => selectField(null)">
                   Done
