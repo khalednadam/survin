@@ -1,62 +1,40 @@
+const { surveyService } = require(".");
 const { Response } = require("../models");
+const ApiError = require("../utils/ApiError");
+const googleStorage = require("../utils/googleStorage");
 
 /**
  * Creates a new response for a survey.
  * @param {Object} responseBody - The body of the response containing the response details.
- * @param {ObjectId} responseBody.surveyId - The ID of the survey to which the response belongs.
+ * @param {ObjectId} responseBody.survey- The ID of the survey to which the response belongs.
  * @param {Array<Object>} responseBody.answers - An array of objects containing the response to each field in the survey.
  * @param {ObjectId} responseBody.answers[].fieldId - The ID of the field to which the response belongs.
  * @param {*} responseBody.answers[].value - The response value.
  * @returns {Promise<Object>} A promise that resolves to the created response object.
  */
 const createResponse = async (responseBody) => {
+  const survey = await surveyService.getSurvey(responseBody.survey);
+  // if (file) {
+  //   const imgUrl = await googleStorage.uploadToGoogleStorage(file.originalname, file.buffer);
+  //   = imgUrl;
+  // }
+  survey.fields.map((field, i) => {
+    if ((!responseBody.answers[i].value || responseBody.answers[i].value.length === 0) && field.required) {
+      console.log(responseBody.answers[i].value.length === 0)
+      throw new ApiError(httpStatus.METHOD_NOT_ALLOWED, "Please fill all the required fields");
+    }
+  })
   return Response.create(responseBody);
 }
 
 const getResponse = async (responseId) => {
   try {
-    const response = Response.findById(responseId).populate('survey')
+    const response = await Response.findById(responseId).populate('survey')
+    const fields = response.survey.fields;
+    console.log(fields);
     return response;
   } catch (error) {
     console.error("Error populating fields for response:", error);
-    throw error;
-  }
-}
-
-
-/**
- * Get responses for a survey.
- * @param {ObjectId} surveyId - The ID of the survey for which responses are requested.
- * @returns {Promise<Array<Object>>} A promise that resolves to an array containing responses for the survey.
- */
-const getResponsesForSurvey = async (surveyId) => {
-  try {
-    const aggregationPipeline = [
-      {
-        $match: { survey: ObjectId(surveyId) } // Match responses for a specific survey
-      },
-      {
-        $lookup: {
-          from: "surveys",
-          localField: "survey",
-          foreignField: "_id",
-          as: "survey"
-        }
-      },
-      {
-        $unwind: "$survey" // Unwind the survey array created by the lookup
-      },
-      {
-        $addFields: {
-          "fields": "$survey.fields" // Add fields from the survey to each response
-        }
-      }
-    ];
-
-    const populatedResponses = await Response.aggregate(aggregationPipeline);
-    return populatedResponses;
-  } catch (error) {
-    console.error("Error populating fields for responses:", error);
     throw error;
   }
 }
@@ -78,7 +56,7 @@ const getResponsesByUser = async (userId) => {
  * @returns {Promise<Object>} A promise that resolves to an object containing paginated response results.
  */
 const queryResponses = async (filter, options) => {
-  options.populate = options.populate ? `survey` : 'survey';
+  options.populate = 'survey,user';
   const responses = await Response.paginate(filter, options);
   return responses;
 }
@@ -86,7 +64,6 @@ const queryResponses = async (filter, options) => {
 module.exports = {
   createResponse,
   getResponse,
-  getResponsesForSurvey,
   getResponsesByUser,
   queryResponses
 };
