@@ -1,21 +1,28 @@
 <script setup>
 import { useRoute } from "vue-router"
 import axiosInstance from "../composables/axios.js";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import Field from "../components/Field.vue"
+import { useCurrentUser } from "@/stores/auth";
+import { Icon } from "@iconify/vue";
+import { toastError } from "../composables/helper";
 
 const route = useRoute();
+const authStore = useCurrentUser();
 
 const survey = ref(null);
 const loading = ref(false);
-
+const submitting = ref(false);
+const answers = ref([]);
+const sentDialog = ref(false);
 
 const getSurveyById = async () => {
   loading.value = true;
   try {
     const response = await axiosInstance.get(`survey/${route.params.surveyId}`);
-    console.log(response);
     survey.value = response.data;
+    answers.value = survey.value.fields.map((field) => ({ fieldId: field._id, value: [] }));
+    console.log(answers.value);
   } catch (err) {
     console.log(err)
   } finally {
@@ -23,13 +30,26 @@ const getSurveyById = async () => {
   }
 }
 
+const submit = async () => {
+  submitting.value = true;
+  try {
+    const response = await axiosInstance.post("/response", {
+      survey: survey.value.id,
+      user: !!authStore.user.id ? authStore.user.id : null,
+      answers: answers.value
+    });
+    sentDialog.value = true;
+  } catch (err) {
+    toastError(err);
+  } finally {
+    submitting.value = false;
+  }
+}
 onMounted(async () => {
   await getSurveyById();
 })
 
-watch(loading, () => {
-  console.log(loading.value);
-})
+
 </script>
 <template>
   <v-theme-provider>
@@ -39,11 +59,13 @@ watch(loading, () => {
           {{ survey.title }}
         </h1>
         <div class="mt-5 space-y-6">
-          <template v-for="field in survey.fields" :key="field">
-            <Field :type="field.type" :id="field._id" :options="field.options" :label="field.label" />
+          <template v-for="(field, i) in survey.fields" :key="field._id">
+            <Field v-model="answers[i].value" :type="field.type" :id="field._id" :options="field.options"
+              :label="field.label" :required="field.required" />
           </template>
         </div>
-        <v-btn class="flex place-self-end" color="primary" size="large">
+        <v-btn @click="submit" :loading="submitting" :disabled="submitting" class="flex place-self-end" color="primary"
+          size="large">
           Submit
         </v-btn>
       </div>
@@ -55,6 +77,31 @@ watch(loading, () => {
         Error...
       </div>
     </div>
+
+    <v-dialog persistent v-model="sentDialog" class="md:max-w-[35vw] w-full">
+      <v-card>
+        <v-card-title>
+          <div class="flex flex-row justify-between items-center w-full">
+            <p>
+            </p>
+            <router-link to="/">
+              <v-btn icon size="x-small" variant="text">
+                <Icon icon="ph:x" width="20" />
+              </v-btn>
+            </router-link>
+          </div>
+        </v-card-title>
+        <v-card-text class="flex justify-center items-center flex-col">
+          <Icon icon="ph:check-circle" class="text-success" width="120" />
+          Your response was sent successfully!
+          <router-link to="/">
+            <v-btn color="primary" variant="flat" class="mt-10">
+              Close
+            </v-btn>
+          </router-link>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-theme-provider>
 </template>
 
