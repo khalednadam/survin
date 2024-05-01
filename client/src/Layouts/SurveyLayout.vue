@@ -1,4 +1,11 @@
 <script setup>
+import { onMounted } from "vue";
+import { useCurrentUser } from "@/stores/auth";
+const authStore = useCurrentUser();
+
+onMounted(() => {
+  authStore.getUser();
+});
 
 </script>
 <template>
