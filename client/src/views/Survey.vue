@@ -53,7 +53,20 @@ onMounted(async () => {
 </script>
 <template>
   <v-theme-provider>
-    <div :key="loading">
+    <div v-if="true" class="flex flex-col gap-5 justify-center items-center w-full h-[85vh] ">
+      <h1 class="text-primary">
+        This survey is closed
+      </h1>
+      <div>
+        <router-link to="/">
+          <v-btn color="primary" flat>
+            <Icon icon="ph:house" width="20" />
+            Home
+          </v-btn>
+        </router-link>
+      </div>
+    </div>
+    <div :key="loading" v-else>
       <div v-if="survey && !loading" class="flex flex-col w-full">
         <h1>
           {{ survey.title }}
