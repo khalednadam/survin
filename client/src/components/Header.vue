@@ -2,15 +2,13 @@
 import { Icon } from "@iconify/vue";
 import { useDisplay } from "vuetify";
 import ModeSwitcher from "../components/ModeSwitcher.vue";
-import { ref } from "vue";
 import { useRoute } from "vue-router";
 import Logo from "./Logo.vue";
-
 import { useSurveySearch } from "../stores/surveySearch.js"
 import { storeToRefs } from "pinia";
-
 const surveySearch = useSurveySearch();
 const { searchWord } = storeToRefs(surveySearch);
+
 const { mdAndUp, smAndDown } = useDisplay();
 const route = useRoute();
 const props = defineProps({
@@ -26,7 +24,7 @@ const emits = defineEmits(["toggleDrawer"]);
   <v-app-bar elevation="0">
     <v-row no-gutters class="items-center my-auto px-5 !py-0 !m-0">
       <v-col cols="5" class="">
-        <div class="flex">
+        <div class="flex items-center">
           <v-btn v-if="smAndDown" variant="text" icon rounded="lg" @click="$emit('toggleDrawer')">
             <Icon icon="ph:list" width="35"></Icon>
           </v-btn>
@@ -68,6 +66,11 @@ const emits = defineEmits(["toggleDrawer"]);
               </v-card>
             </template>
           </v-dialog>
+          <router-link to="/create-survey" v-if="!mdAndUp">
+            <v-btn color="primary" icon size="small" variant="flat" @click="() => { }">
+              <Icon icon="ph:plus-bold" width="20"></Icon>
+            </v-btn>
+          </router-link>
         </div>
       </v-col>
       <v-col cols="5" class="flex flex-col justify-center">
@@ -86,9 +89,6 @@ const emits = defineEmits(["toggleDrawer"]);
       </v-col>
       <v-col cols="2">
         <div class="flex justify-end items-center">
-          <!-- <v-btn variant="text" icon rounded="lg"> -->
-          <!--   <Icon icon="ph:bell" width="35" color="#79AC78"></Icon> -->
-          <!-- </v-btn> -->
           <ModeSwitcher />
           <Logo />
         </div>
