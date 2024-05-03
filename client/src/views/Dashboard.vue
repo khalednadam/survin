@@ -7,6 +7,7 @@ import SurveyCard from '../components/SurveyCard.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useSurveySearch } from "../stores/surveySearch.js"
 import { storeToRefs } from "pinia";
+import { Icon } from '@iconify/vue';
 
 const surveySearch = useSurveySearch();
 const { searchWord } = storeToRefs(surveySearch);
@@ -50,12 +51,11 @@ watch(searchWord, debounce(() => {
   </v-row>
   <v-row class="mt-8" v-else>
     <v-col cols="12" md="4" v-for="survey in surveys.results" :key="survey._id">
-      <SurveyCard :title="survey.title" :fields-count="survey.fields.length" :created-at="survey.createdAt"
-        :id="survey._id" />
+      <SurveyCard :title="survey.title" :responses-count="survey.responsesCount" :is-closed="survey.isClosed"
+        :created-at="survey.createdAt" :id="survey._id" />
     </v-col>
   </v-row>
-
-  <v-pagination v-if="!loading" class="mt-20" v-model="page" color="primary"
+  <v-pagination v-if="!loading" class="mt-10" v-model="page" color="primary"
     @update:model-value="router.replace({ query: { page: page } })" :length="surveys.totalPages"
     rounded="large"></v-pagination>
 </template>
