@@ -40,11 +40,16 @@ const deleteSurvey = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send(survey);
 });
 
+const updateSurvey = catchAsync(async (req, res) => {
+  const survey = await surveyService.updateSurvey(req.params.id, req.body);
+  res.status(httpStatus.OK).send(survey);
+})
 
 module.exports = {
   createSurvey,
   getSurvey,
   querySurveys,
   deleteSurvey,
-  queryMySurveys
+  queryMySurveys,
+  updateSurvey
 }
