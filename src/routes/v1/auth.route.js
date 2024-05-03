@@ -9,13 +9,13 @@ const router = express.Router();
 router.post(
   "/register",
   validate(authValidation.register),
-  authController.register
+  authController.register,
 );
 
 router.post(
   "/login",
   validate(authValidation.login),
-  authController.emailAndPasswordLogin
+  authController.emailAndPasswordLogin,
 );
 
 router.post("/logout", authController.logout);
@@ -23,46 +23,48 @@ router.post("/logout", authController.logout);
 router.post(
   "/refresh-tokens",
   validate(authValidation.refreshTokens),
-  authController.refreshTokens
+  authController.refreshTokens,
 );
 
 router.post(
   "/forgot-password",
   validate(authValidation.forgotPassword),
-  authController.forgotPassword
+  authController.forgotPassword,
 );
 
 router.post(
   "/reset-password",
   validate(authValidation.resetPassword),
-  authController.resetPassword
+  authController.resetPassword,
 );
 
 router.post(
   "/send-verification-email",
   auth(),
-  authController.sendVerificationEmail
+  authController.sendVerificationEmail,
 );
 
 router.post(
   "/verify-email",
   validate(authValidation.verifyEmail),
-  authController.verifyEmail
+  authController.verifyEmail,
 );
 
-router.post("/change-password",
-  authController.changePassword
-)
+router.post("/change-password", authController.changePassword);
 
-router.get("/google/callback",
-  passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/auth/google/failure'
-  })
-)
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/auth/google/failure",
+  }),
+);
 
-router.get("/google",
-  passport.authenticate('google', { scope: ['email', 'profile'] }
+router.get(
+  "/google",
+  passport.authenticate(
+    "google",
+    { scope: ["email", "profile"] },
     // passport.authenticate('google', { failureRedirect: '/login', scope: ['profile', 'email'] }),
     //   function(req, res) {
     //     // Successful authentication, redirect home.
@@ -70,9 +72,7 @@ router.get("/google",
     //     console.log("done");
     //   }
     // )
-  ))
-
-
-
+  ),
+);
 
 module.exports = router;
