@@ -38,9 +38,10 @@ const querySurveys = async (filter, options) => {
   return surveys;
 }
 
-// const updateSurvey = async (surveyId, surveyBody) => {
-//   const 
-// }
+const updateSurvey = async (surveyId, surveyBody) => {
+  const survey = await Survey.findByIdAndUpdate(surveyId, surveyBody);
+  return survey;
+}
 
 /**
  * @param {ObjectId} surveyId
@@ -55,5 +56,6 @@ module.exports = {
   createSurvey,
   getSurvey,
   querySurveys,
-  deleteSurvey
+  deleteSurvey,
+  updateSurvey
 }
