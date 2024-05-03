@@ -17,6 +17,7 @@ const surveyId = ref("");
 const successDialog = ref(false);
 const link = ref("");
 const { text, copy, copied, isSupported } = useClipboard({ link })
+const loading = ref(false);
 
 const addField = () => {
   currentFieldCount.value++;
@@ -33,6 +34,7 @@ const deleteField = () => {
 }
 
 const createSurvey = async () => {
+  loading.value = true;
   try {
     const response = await axiosInstance.post('/survey/', {
       title: surveyTitle.value,
@@ -44,6 +46,8 @@ const createSurvey = async () => {
   } catch (err) {
     console.log(err);
     toast.error('Please fill all the fields')
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -94,7 +98,7 @@ const createSurvey = async () => {
               Add a field
             </v-btn>
             <div class="w-full flex justify-end">
-              <v-btn color="primary" variant="flat" @click="createSurvey" :disabled="fields.length === 0">
+              <v-btn color="primary" variant="flat" @click="createSurvey" :disabled="fields.length === 0 || loading">
                 Create
               </v-btn>
             </div>
@@ -177,6 +181,13 @@ const createSurvey = async () => {
             </v-btn>
           </template>
         </v-text-field>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+  <v-dialog v-model="loading" class="md:max-w-[50vw] w-full">
+    <v-card>
+      <v-card-text class="flex justify-center items-center">
+        <v-progress-circular color="primary" indeterminate="disable-shrink" size="16" width="2"></v-progress-circular>
       </v-card-text>
     </v-card>
   </v-dialog>
