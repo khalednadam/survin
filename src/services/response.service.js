@@ -1,7 +1,7 @@
+const httpStatus = require("http-status");
 const { surveyService } = require(".");
-const { Response } = require("../models");
+const { Response, Survey } = require("../models");
 const ApiError = require("../utils/ApiError");
-const googleStorage = require("../utils/googleStorage");
 
 /**
  * Creates a new response for a survey.
@@ -14,16 +14,22 @@ const googleStorage = require("../utils/googleStorage");
  */
 const createResponse = async (responseBody) => {
   const survey = await surveyService.getSurvey(responseBody.survey);
-  // if (file) {
-  //   const imgUrl = await googleStorage.uploadToGoogleStorage(file.originalname, file.buffer);
-  //   = imgUrl;
-  // }
+  if (survey.isClosed) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "This survey is closed");
+  }
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   survey.fields.map((field, i) => {
     if ((!responseBody.answers[i].value || responseBody.answers[i].value.length === 0) && field.required) {
-      console.log(responseBody.answers[i].value.length === 0)
-      throw new ApiError(httpStatus.METHOD_NOT_ALLOWED, "Please fill all the required fields");
+      throw new ApiError(httpStatus.BAD_REQUEST, "Please fill all the required fields");
+    }
+    if (field.type === 'email' && !emailRegex.test(responseBody.answers[i].value)) {
+      console.log('email');
+      throw new ApiError(httpStatus.BAD_REQUEST, "Email is not valid");
     }
   })
+  console.log(survey._id);
+
+  await Survey.findOneAndUpdate({ _id: survey._id.toString() }, { responsesCount: survey.responsesCount + 1 });
   return Response.create(responseBody);
 }
 
