@@ -1,4 +1,5 @@
 <script setup>
+import { VNumberInput } from 'vuetify/labs/VNumberInput'
 import { PhoneInput } from '@lbgm/phone-number-input';
 import '@lbgm/phone-number-input/style';
 import { ref } from "vue";
@@ -18,16 +19,11 @@ const props = defineProps({
 
 const emailRules = ref([
   value => {
-    if (value) return true
-
-    return 'E-mail is requred.'
-  },
-  value => {
-    if (/.+@.+\..+/.test(value)) return true
-
+    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) return true
     return 'E-mail must be valid.'
   },
-]); 
+]);
+
 </script>
 <template>
   <v-text-field v-if="type === 'text'" v-model="value" :label="required ? label + '*' : label">
@@ -63,11 +59,10 @@ const emailRules = ref([
       </v-checkbox>
     </div>
   </div>
-  <v-text-field v-model="value" v-if="type === 'number'" type="number"
-    :label="required ? label + '*' : label"></v-text-field>
-  <v-date-picker v-model="value" v-if="type === 'date'" color="primary"
-    :title="required ? label + '*' : label"></v-date-picker>
-  <v-file-input v-model="value" v-if="type === 'file'" :label="label"></v-file-input>
+  <v-number-input v-if="type === 'number'" rounded="lg" density="compact" :label="required ? label + '*' : label"
+    v-model="value" variant="outlined"></v-number-input>
+  <v-date-picker v-model="value" v-if="type === 'date'" color="primary" :title="required ? label + '*' : label">
+  </v-date-picker>
   <PhoneInput @phone="(e) => value = e" id="phone" v-if="type === 'phone number'" :label="required ? label + '*' : label">
   </PhoneInput>
 </template>
