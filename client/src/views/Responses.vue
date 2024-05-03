@@ -1,11 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axiosInstance from '../composables/axios';
-import { onMounted } from 'vue';
-import { watch } from 'vue';
-import { Field } from 'vee-validate';
 import { Icon } from '@iconify/vue';
+import { useDisplay } from 'vuetify/lib/framework.mjs';
 
 const route = useRoute();
 const router = useRouter();
@@ -23,6 +21,9 @@ const dateOpt = {
   year: 'numeric'
 };
 
+const { mdAndUp } = useDisplay();
+
+const responsesDialog = ref(false);
 const responses = ref([]);
 const loading = ref(false);
 const surveyId = ref(route.params.surveyId);
@@ -104,7 +105,7 @@ const goBack = () => router.go(-1);
       </h1>
     </div>
     <v-row class="mt-5">
-      <v-col cols="0" md="4">
+      <v-col cols="0" md="4" v-if="mdAndUp">
         <v-card>
           <v-card-text>
             <v-virtual-scroll class="max-h-[70vh]" :items="responses">
@@ -118,9 +119,12 @@ const goBack = () => router.go(-1);
           </v-card-text>
         </v-card>
       </v-col>
+      <v-btn class="w-full" flat color="primary" @click="responsesDialog = true" v-if="!mdAndUp">
+        Responses
+      </v-btn>
       <v-col cols="12" md="8">
         <v-card>
-          <v-card-text>
+          <v-card-text v-if="survey && response">
             <template v-for="(field, i) in survey.fields">
               <div class="my-5">
                 <p class="opacity-50 ml-2">
@@ -129,28 +133,61 @@ const goBack = () => router.go(-1);
                     *
                   </span>
                 </p>
-                <p v-if="field.type === 'date'" class="ml-2">
-                  {{ new Date(response.answers[i].value).toLocaleString("en-NZ", dateOpt) }}
-                </p>
-                <div v-else-if="field.type === 'rating'">
-                  <v-rating readonly v-model="response.answers[i].value" active-color="primary"
-                    color="grey-lighten-1"></v-rating>
+                <div v-if="response.answers[i].value.length > 0">
+                  <p v-if="field.type === 'date'" class="ml-2">
+                    {{ new Date(response.answers[i].value).toLocaleString("en-NZ", dateOpt) }}
+                  </p>
+                  <div v-else-if="field.type === 'rating'">
+                    <v-rating readonly v-model="response.answers[i].value" active-color="primary"
+                      color="grey-lighten-1"></v-rating>
+                  </div>
+                  <div v-else-if="field.type === 'checkbox'" class="ml-2">
+                    <span v-for="opt in response.answers[i].value">
+                      {{ opt }},
+                    </span>
+                  </div>
+                  <p v-else class="ml-2">
+                    {{ response.answers[i].value }}
+                  </p>
                 </div>
-                <div v-else-if="field.type === 'checkbox'" class="ml-2">
-                  <span v-for="opt in response.answers[i].value">
-                    {{ opt }},
-                  </span>
-                </div>
-                <p v-else class="ml-2">
-                  {{ response.answers[i].value }}
-                </p>
               </div>
             </template>
+          </v-card-text>
+          <v-card-text v-else>
+            <div class="h-full w-full flex justify-center items-center">
+              <p>
+                Select a response to see its details
+              </p>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
     </v-row>
   </div>
+  <v-dialog v-if="!mdAndUp" v-model="responsesDialog">
+    <v-card>
+      <v-card-title>
+        <div class="flex justify-between items-center">
+          <p>
+            Responses
+          </p>
+          <v-btn icon variant="text" size="x-small" @click="responsesDialog = false">
+            <Icon icon="ph:x" width="20" />
+          </v-btn>
+        </div>
+      </v-card-title>
+      <v-card-text>
+        <v-virtual-scroll class="max-h-[70vh]" :items="responses">
+          <template v-slot:default="{ item }">
+            <v-list-item :key="route.query.response" @click="() => { selectResponse(item.id); responsesDialog = false }"
+              color="primary" :active="selectedResponse === item.id">
+              Response on {{ new Date(item.createdAt).toLocaleString("en-US", fullDateOptions) }}
+            </v-list-item>
+          </template>
+        </v-virtual-scroll>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 
