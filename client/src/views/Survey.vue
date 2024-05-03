@@ -53,7 +53,7 @@ onMounted(async () => {
 </script>
 <template>
   <v-theme-provider>
-    <div v-if="true" class="flex flex-col gap-5 justify-center items-center w-full h-[85vh] ">
+    <div v-if="survey.isClosed" class="flex flex-col gap-5 justify-center items-center w-full h-[85vh] ">
       <h1 class="text-primary">
         This survey is closed
       </h1>
