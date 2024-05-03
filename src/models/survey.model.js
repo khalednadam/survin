@@ -30,6 +30,10 @@ const surveySchema = mongoose.Schema(
       ref: "User"
     },
     fields: [fieldSchema],
+    responsesCount: {
+      type: Number,
+      default: 0
+    },
     isClosed: {
       type: Boolean,
       default: false
