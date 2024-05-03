@@ -10,7 +10,7 @@ const fieldSchema = mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["text", "textarea", "radio", "checkbox", "dropdown", "rating", "date", "file", "email", "number", "phone number", "color"],
+      enum: ["text", "textarea", "radio", "checkbox", "dropdown", "rating", "date", "email", "number", "phone number"],
       required: true,
     },
     options: [String], // Only required for fields like radio, checkbox, and dropdown
