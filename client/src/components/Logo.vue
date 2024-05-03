@@ -10,6 +10,6 @@ const logo = computed(() => {
 </script>
 <template>
   <router-link to="/">
-    <v-img :src="logo" :width="50" class="mx-2"> </v-img>
+    <v-img :src="logo" :width="40" class="mx-2"> </v-img>
   </router-link>
 </template>

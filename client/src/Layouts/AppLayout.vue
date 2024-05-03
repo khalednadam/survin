@@ -21,7 +21,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <v-navigation-drawer :permanent="mdAndUp" v-model="drawer" location="left" v-if="authStore.user" color="base">
+    <v-navigation-drawer :permanent="mdAndUp" v-model="drawer" location="left" v-if="authStore.user && !mdAndUp"
+      color="base">
       <template v-slot:prepend>
         <router-link to="/settings">
           <v-list-item link lines="two" :title="authStore.user.name" :subtitle="'@' + authStore.user.username">
@@ -58,7 +59,7 @@ onMounted(() => {
         <LogoutBtn />
       </v-list>
     </v-navigation-drawer>
-    <Header @toggle-drawer="() => (drawer = !drawer)" :drawer="drawer" />
+    <Header :user="authStore.user" @toggle-drawer="() => (drawer = !drawer)" :drawer="drawer" />
     <v-main>
       <!-- <v-container> -->
       <div class="mx-10">

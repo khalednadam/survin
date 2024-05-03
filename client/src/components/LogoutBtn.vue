@@ -27,7 +27,7 @@ const logout = () => {
 <template>
   <v-dialog width="500">
     <template v-slot:activator="{ props }">
-      <v-list-item title="Logout" v-bind="props" base-color="red" variant="outlined" class="absolute end-0">
+      <v-list-item title="Logout" v-bind="props" base-color="red" variant="text" class="absolute end-0">
         <template #prepend>
           <Icon icon="ph:sign-out" width="25" />
         </template>

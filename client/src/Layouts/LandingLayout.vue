@@ -27,13 +27,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <v-app-bar
-    :elevation="scrolledDown ? 2 : 0"
-    density="default"
-    class="transition-all duration-200"
-    transition="fade-transition"
-    :color="scrolledDown ? 'white' : 'white'"
-  >
+  <v-app-bar :elevation="scrolledDown ? 2 : 0" density="default" class="transition-all duration-200"
+    transition="fade-transition" :color="scrolledDown ? 'white' : 'white'">
     <v-container v-if="mdAndUp">
       <div class="flex w-full justify-between items-center">
         <div class="flex items-center justify-start gap-10">
@@ -43,19 +38,6 @@ onUnmounted(() => {
               <router-link to="/home">
                 <p class="cursor-pointer">Home</p>
               </router-link>
-            </div>
-            <div class="flex items-center">
-              <v-menu open-on-hover>
-                <template v-slot:activator="{ props }">
-                  <div v-bind="props" class="flex cursor-pointer items-center">
-                    <p>Features</p>
-                    <Icon icon="ph:caret-down" width="20" />
-                  </div>
-                </template>
-                <v-list>
-                  <v-list-item> Real time updates </v-list-item>
-                </v-list>
-              </v-menu>
             </div>
             <div class="flex items-center">
               <p class="cursor-pointer">About</p>
@@ -91,12 +73,7 @@ onUnmounted(() => {
   </v-app-bar>
   <v-container>
     <v-main theme>
-      <v-navigation-drawer
-        v-model="drawer"
-        v-if="!mdAndUp"
-        location="right"
-        color="base"
-      >
+      <v-navigation-drawer v-model="drawer" v-if="!mdAndUp" location="right" color="base">
         <v-list>
           <div class="flex items-center">
             <v-list-item>
