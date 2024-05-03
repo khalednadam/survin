@@ -8,6 +8,7 @@ router.get("/surveys", surveyController.querySurveys);
 router.get("/my-surveys", surveyController.queryMySurveys);
 router.route("/:id")
   .get(surveyController.getSurvey)
+  .put(surveyController.updateSurvey)
   .delete(sessionAuth, surveyController.deleteSurvey);
 
 module.exports = router;
