@@ -15,7 +15,7 @@ let text = [
       <v-row class="">
         <v-col cols="12">
           <div class="w-full flex items-center gap-5 justify-center flex-col">
-            <h1 class="text-5xl md:max-w-[90%] font-normal text-white text-center md:text-start">
+            <h1 class="md:text-5xl text-3xl md:max-w-[90%] font-normal text-white text-center md:text-start">
               Surveys made
               <br v-if="!mdAndUp">
               <AutoTyperVue componentTag="span" class="font-bold" :text="text" />
