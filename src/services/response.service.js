@@ -23,11 +23,9 @@ const createResponse = async (responseBody) => {
       throw new ApiError(httpStatus.BAD_REQUEST, "Please fill all the required fields");
     }
     if (field.type === 'email' && !emailRegex.test(responseBody.answers[i].value)) {
-      console.log('email');
       throw new ApiError(httpStatus.BAD_REQUEST, "Email is not valid");
     }
   })
-  console.log(survey._id);
 
   await Survey.findOneAndUpdate({ _id: survey._id.toString() }, { responsesCount: survey.responsesCount + 1 });
   return Response.create(responseBody);
@@ -36,8 +34,6 @@ const createResponse = async (responseBody) => {
 const getResponse = async (responseId) => {
   try {
     const response = await Response.findById(responseId).populate('survey')
-    const fields = response.survey.fields;
-    console.log(fields);
     return response;
   } catch (error) {
     console.error("Error populating fields for response:", error);

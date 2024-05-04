@@ -30,7 +30,6 @@ const getSurveys = async () => {
       },
     });
     surveys.value = response.data;
-    console.log(response.data);
   } catch (err) {
     toastError(err);
   } finally {
@@ -47,7 +46,7 @@ watch(searchWord, debounce(() => {
 <template>
   <div class="flex justify-between items-center my-5">
     <h1>Your surveys</h1>
-    <div class="w-1/3 flex justify-end" >
+    <div class="w-1/3 flex justify-end">
       <v-text-field v-if="mdAndUp" v-model="searchWord" clearable="" color="primary" rounded placeholder="Search"
         hide-details density="compact">
         <template #append-inner>

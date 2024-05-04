@@ -180,7 +180,6 @@ const deleteProfilePic = handleSubmit(() => {
     });
 });
 const updateProfilePic = handleSubmit(() => {
-  console.log(profilePic.value);
   isLoading.value = true;
   axiosInstance
     .put(

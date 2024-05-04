@@ -22,7 +22,6 @@ const getSurveyById = async () => {
     const response = await axiosInstance.get(`survey/${route.params.surveyId}`);
     survey.value = response.data;
     answers.value = survey.value.fields.map((field) => ({ fieldId: field._id, value: [] }));
-    console.log(answers.value);
   } catch (err) {
     console.log(err)
   } finally {
@@ -104,7 +103,7 @@ onMounted(async () => {
             </router-link>
           </div>
         </v-card-title>
-        <v-card-text class="flex justify-center items-center flex-col">
+        <v-card-text class="flex justify-center text-center items-center flex-col">
           <Icon icon="ph:check-circle" class="text-success" width="120" />
           Your response was sent successfully!
           <router-link to="/">

@@ -117,7 +117,6 @@ const generateAuthToken = async (user) => {
  * @returns {Promise<string>}
  */
 const generateResetPasswordToken = async (email) => {
-  console.log(email);
   const user = await userService.getUserByEmail(email);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "No users found with this email");

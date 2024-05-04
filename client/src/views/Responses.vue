@@ -34,7 +34,6 @@ const survey = ref("");
 
 const getSurveyResponses = async () => {
   loading.value = true;
-  console.log("get survey responses")
   try {
     const response = await axiosInstance.get(`/response/of/${surveyId.value}`, {
       params: {
@@ -66,7 +65,6 @@ const getSurveyById = async () => {
   try {
     const response = await axiosInstance.get(`survey/${route.params.surveyId}`);
     survey.value = response.data;
-    console.log(answers.value);
   } catch (err) {
     console.log(err)
   } finally {
@@ -133,7 +131,7 @@ const goBack = () => router.go(-1);
                     *
                   </span>
                 </p>
-                <div v-if="response.answers[i].value.length > 0">
+                <div v-if="response.answers[i].value.length > 0 || field.type === 'rating'">
                   <p v-if="field.type === 'date'" class="ml-2">
                     {{ new Date(response.answers[i].value).toLocaleString("en-NZ", dateOpt) }}
                   </p>

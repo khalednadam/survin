@@ -76,7 +76,6 @@ const updateUser = catchAsync(async (req, res) => {
     );
   }
   if (req.file) {
-    console.log(req.file);
     const user = await userService.updateUserById(
       req.params.userId,
       req.body,
