@@ -4,9 +4,12 @@ import { Icon } from "@iconify/vue";
 import { onUnmounted } from "vue";
 import { onMounted } from "vue";
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify/lib/framework.mjs";
+import Footer from "../views/landing/Footer.vue";
 const { mdAndUp } = useDisplay();
 
+const route = useRoute();
 const scrolledDown = ref(false);
 const drawer = ref(false);
 // Function to check if the user has scrolled down
@@ -27,25 +30,30 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <v-app-bar :elevation="scrolledDown ? 2 : 0" density="default" class="transition-all duration-200"
-    transition="fade-transition" :color="scrolledDown ? 'white' : 'white'">
+  <v-app-bar :color="scrolledDown ? 'white' : 'white'" :elevation="scrolledDown ? 2 : 0" density="default"
+    class="transition-all duration-200" transition="fade-transition">
     <v-container v-if="mdAndUp">
       <div class="flex w-full justify-between items-center">
         <div class="flex items-center justify-start gap-10">
           <v-img :width="50" class="" src="/colored-logo.svg"> </v-img>
           <div class="flex gap-7 items-center">
             <div class="flex items-center">
-              <router-link to="/home">
-                <p class="cursor-pointer">Home</p>
-              </router-link>
-            </div>
-            <div class="flex items-center">
-              <p class="cursor-pointer">About</p>
-            </div>
-            <div class="flex items-center">
-              <router-link to="/home/blog">
-                <p class="cursor-pointer">Blog</p>
-              </router-link>
+              <!--   <router-link to="/home"> -->
+              <!--     <v-btn color="primary" :variant="route.path === '/home' ? 'tonal' : 'text'" -->
+              <!--       class="cursor-pointer">Home</v-btn> -->
+              <!--   </router-link> -->
+              <!-- </div> -->
+              <!-- <div class="flex items-center"> -->
+              <!--   <router-link to="/home/about"> -->
+              <!--     <v-btn color="primary" :variant="route.path === '/home/about' ? 'tonal' : 'text'" -->
+              <!--       class="cursor-pointer">About</v-btn> -->
+              <!--   </router-link> -->
+              <!-- </div> -->
+              <!-- <div class="flex items-center"> -->
+              <!--   <router-link to="/home/blog"> -->
+              <!--     <v-btn color="primary" :variant="route.path === '/home/blog' ? 'tonal' : 'text'" -->
+              <!--       class="cursor-pointer">Blog</v-btn> -->
+              <!--   </router-link> -->
             </div>
           </div>
         </div>
@@ -75,36 +83,21 @@ onUnmounted(() => {
     <v-main theme>
       <v-navigation-drawer v-model="drawer" v-if="!mdAndUp" location="right" color="base">
         <v-list>
-          <div class="flex items-center">
-            <v-list-item>
-              <router-link to="/home">
-                <p class="cursor-pointer">Home</p>
-              </router-link>
-            </v-list-item>
-          </div>
-          <div class="flex items-center">
-            <v-list-item>
-              <v-menu open-on-hover>
-                <template v-slot:activator="{ props }">
-                  <div v-bind="props" class="flex cursor-pointer items-center">
-                    <p>Features</p>
-                    <Icon icon="ph:caret-down" width="20" />
-                  </div>
-                </template>
-                <v-list>
-                  <v-list-item> Real time updates </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-list-item>
-          </div>
-          <v-list-item>
-            <p class="cursor-pointer">About</p>
-          </v-list-item>
-          <v-list-item>
-            <router-link to="/home/blog">
-              <p class="cursor-pointer">Blog</p>
-            </router-link>
-          </v-list-item>
+          <!-- <div class="flex items-center"> -->
+          <!-- <v-list-item> -->
+          <!--   <router-link to="/home"> -->
+          <!--     <p class="cursor-pointer">Home</p> -->
+          <!--   </router-link> -->
+          <!-- </v-list-item> -->
+          <!-- </div> -->
+          <!-- <v-list-item> -->
+          <!--   <p class="cursor-pointer">About</p> -->
+          <!-- </v-list-item> -->
+          <!-- <v-list-item> -->
+          <!--   <router-link to="/home/blog"> -->
+          <!--     <p class="cursor-pointer">Blog</p> -->
+          <!--   </router-link> -->
+          <!-- </v-list-item> -->
           <v-list-item>
             <router-link to="/login"> Login </router-link>
           </v-list-item>
@@ -118,4 +111,5 @@ onUnmounted(() => {
       <slot></slot>
     </v-main>
   </v-container>
+  <Footer />
 </template>

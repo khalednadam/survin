@@ -16,7 +16,6 @@ const router = useRouter();
 const authStore = useCurrentUser();
 
 // REFS
-const addMembersDialog = ref(false);
 const drawer = ref(mdAndUp.value ? true : false);
 
 
