@@ -7,6 +7,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import Footer from "../views/landing/Footer.vue";
+import ColorChanger from "../components/ColorChanger.vue";
 const { mdAndUp } = useDisplay();
 
 const route = useRoute();
@@ -58,6 +59,7 @@ onUnmounted(() => {
           </div>
         </div>
         <div>
+          <ColorChanger />
           <router-link to="/login">
             <v-btn> Login </v-btn>
           </router-link>
@@ -72,10 +74,13 @@ onUnmounted(() => {
         <div class="flex items-center justify-start gap-10">
           <v-img :width="50" class="" src="/colored-logo.svg"> </v-img>
         </div>
-        <v-btn icon @click="drawer = !drawer">
-          <Icon icon="ph:list" width="25" v-if="!drawer" />
-          <Icon icon="ph:x" width="25" v-else />
-        </v-btn>
+        <div>
+          <ColorChanger />
+          <v-btn icon @click="drawer = !drawer">
+            <Icon icon="ph:list" width="25" v-if="!drawer" />
+            <Icon icon="ph:x" width="25" v-else />
+          </v-btn>
+        </div>
       </div>
     </v-container>
   </v-app-bar>
