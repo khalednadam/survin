@@ -73,7 +73,7 @@ onUnmounted(() => {
     <v-container v-else>
       <div class="flex w-full justify-between">
         <div class="flex items-center justify-start gap-10">
-          <v-img :width="50" class="" src="/colored-logo.svg"> </v-img>
+          <Logo />
         </div>
         <div>
           <ColorChanger />
