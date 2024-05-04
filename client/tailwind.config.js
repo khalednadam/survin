@@ -24,7 +24,7 @@ export default {
         "hover-dark": "#5b5b5b",
       },
       fontFamily: {
-        lato: "Lato, sans-serif", // Adds a new `font-display` class
+        lato: "Montserrat, sans-serif", // Adds a new `font-display` class
       },
     },
   },

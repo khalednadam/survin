@@ -72,7 +72,7 @@ const emailRules = ref([
 }
 
 #phone>div>label {
-  font-family: "Lato", sans-serif !important;
+  font-family: "Montserrat", sans-serif !important;
   opacity: 0.5 !important;
   font-weight: normal !important;
 }
