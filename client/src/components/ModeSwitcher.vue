@@ -18,7 +18,7 @@ const toggleTheme = () => {
 
 // LIFE CYCLES
 onMounted(() => {
-  isDark.value = localStorage.getItem("survon-theme") === "dark" ? true : false;
+  isDark.value = localStorage.getItem("survin-theme") === "dark" ? true : false;
   toggleTheme();
 });
 watch(isDark, () => {

@@ -13,7 +13,7 @@ const dark = {
     // warning: "#fec90f",
     // error: "#fc4b6c",
     // secondary: "#f0ae00",
-    primary: "#213BAA",
+    primary: localStorage.getItem("primary-color") || "#213BAA",
     darkPrimary: "#313F35",
     secondary: "#F7DB6A",
     error1: "#FFC1CE",
@@ -40,7 +40,7 @@ const light = {
     // warning: "#fec90f",
     // error: "#fc4b6c",
     // secondary: "#f0ae00",
-    primary: "#213BAA",
+    primary: localStorage.getItem("primary-color") || "#213BAA",
     secondary: "#F7DB6A",
     error1: "#fa0505",
     error2: "#94354B",
@@ -67,7 +67,7 @@ const settings = {
   components: components,
   directives: directives,
   theme: {
-    defaultTheme: localStorage.getItem("survin-theme") || "dark",
+    defaultTheme: localStorage.getItem("survin-theme") || "light",
     themes: {
       light,
       dark,

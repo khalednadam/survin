@@ -1,5 +1,5 @@
 import { createVuetify } from "vuetify";
-import vuetifySettings from "@/plugins/vuetifySettings";
+import vuetifySettings from "./vuetifySettings";
 
 
 export default createVuetify(vuetifySettings);

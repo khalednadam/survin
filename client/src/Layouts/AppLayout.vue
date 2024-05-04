@@ -17,6 +17,7 @@ const drawer = ref(mdAndUp.value ? true : false);
 onMounted(() => {
   authStore.getUser();
 });
+
 </script>
 
 <template>
