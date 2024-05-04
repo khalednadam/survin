@@ -4,6 +4,7 @@ import AuthLayout from "../Layouts/AuthLayout.vue";
 import AppLayout from "../Layouts/AppLayout.vue";
 import LandingLayout from "../Layouts/LandingLayout.vue";
 import SurveyLayout from "../Layouts/SurveyLayout.vue";
+import AdminLayout from "../Layouts/AdminLayout.vue";
 
 import { createPinia } from "pinia";
 import { useCurrentUser } from "../stores/auth";
@@ -128,6 +129,56 @@ const router = createRouter({
       component: () => import("../views/Responses.vue"),
     },
     {
+      path: "/admin",
+      name: "admin",
+      meta: {
+        layout: AdminLayout,
+        auth: true,
+        admin: true
+      },
+      component: () => import('../views/admin/index.vue'),
+    },
+    {
+      path: "/admin/blog",
+      name: "adminBlogPosts",
+      meta: {
+        layout: AdminLayout,
+        auth: true,
+        admin: true
+      },
+      component: () => import("../views/admin/BlogPosts.vue")
+    },
+    {
+      path: "/admin/blog/create",
+      name: "createBlogPost",
+      meta: {
+        layout: AdminLayout,
+        auth: true,
+        admin: true
+      },
+      component: () => import("../views/admin/CreateBlogPost.vue")
+    },
+    {
+      path: "/admin/blog/:blogPostId",
+      name: "adminPost",
+      meta: {
+        layout: AdminLayout,
+        auth: true,
+        admin: true
+      },
+      component: () => import("../views/admin/BlogPost.vue")
+    },
+    {
+      path: "/admin/settings",
+      name: "admin-settings",
+      component: () => import("../views/Settings.vue"),
+      meta: {
+        admin: true,
+        layout: AdminLayout,
+        auth: true
+      },
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "ErrorView",
       component: () => import("../views/Error.vue"),
@@ -142,6 +193,7 @@ router.beforeEach(async (to, from, next) => {
   try {
     await currentUserStore.getUser();
     const isAuth = !!currentUserStore.user.id;
+    const isAdmin = currentUserStore.user && currentUserStore.user.role === 'admin';
     currentUserStore.user && currentUserStore.user.role === "admin";
     // Redirect unauthenticated users to the home page if the route requires authentication
     if (to.meta.auth === true && !isAuth) {
@@ -154,14 +206,14 @@ router.beforeEach(async (to, from, next) => {
       return;
     }
     // Redirect non-admin users away from admin-only pages
-    // if (to.meta.admin && !isAdmin) {
-    //   next({ name: "main" });
-    //   return;
-    // }
-    // if (!to.meta.admin && isAdmin) {
-    //   next({ name: "admin" });
-    //   return;
-    // }
+    if (to.meta.admin && !isAdmin) {
+      next({ name: "main" });
+      return;
+    }
+    if (!to.meta.admin && isAdmin) {
+      next({ name: "admin" });
+      return;
+    }
     next(); // Proceed to the requested route
   } catch (err) {
     console.log(err);
