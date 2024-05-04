@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { useCurrentUser } from "@/stores/auth";
+import Logo from "../components/Logo.vue";
 const authStore = useCurrentUser();
 
 onMounted(() => {
@@ -15,7 +16,7 @@ onMounted(() => {
       <div class="flex w-full justify-between items-center">
         <div class="flex items-center justify-start gap-10">
           <router-link to="/">
-            <v-img :width="50" class="" src="/colored-logo.svg"> </v-img>
+            <Logo />
           </router-link>
         </div>
       </div>

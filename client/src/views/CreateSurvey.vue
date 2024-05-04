@@ -116,7 +116,7 @@ const createSurvey = async () => {
               <v-text-field label="Label" v-model="fields.find(field => field.order === selectedField).label">
               </v-text-field>
               <v-select label="Type" :items="['text', 'textarea', 'radio', 'checkbox', 'dropdown', 'rating', 'date'
-                , 'file', 'email', 'number', 'phone number']"
+                , 'email', 'number', 'phone number']"
                 v-model="fields.find(field => field.order === selectedField).type">
               </v-select>
               <div
