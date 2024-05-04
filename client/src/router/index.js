@@ -89,16 +89,6 @@ const router = createRouter({
       },
     },
     {
-      path: "/home/blog",
-      name: "blogs",
-      meta: {
-        layout: LandingLayout,
-        auth: false,
-        admin: false,
-      },
-      component: () => import("../views/landing/Blogs.vue"),
-    },
-    {
       path: "/survey/:surveyId",
       name: "survey",
       meta: {
@@ -107,16 +97,6 @@ const router = createRouter({
         admin: false,
       },
       component: () => import("../views/Survey.vue"),
-    },
-    {
-      path: "/home/blog/:blogPostId",
-      name: "post",
-      meta: {
-        layout: LandingLayout,
-        auth: false,
-        admin: false,
-      },
-      component: () => import("../views/landing/BlogPost.vue"),
     },
     {
       path: "/responses/:surveyId",
@@ -137,36 +117,6 @@ const router = createRouter({
         admin: true
       },
       component: () => import('../views/admin/index.vue'),
-    },
-    {
-      path: "/admin/blog",
-      name: "adminBlogPosts",
-      meta: {
-        layout: AdminLayout,
-        auth: true,
-        admin: true
-      },
-      component: () => import("../views/admin/BlogPosts.vue")
-    },
-    {
-      path: "/admin/blog/create",
-      name: "createBlogPost",
-      meta: {
-        layout: AdminLayout,
-        auth: true,
-        admin: true
-      },
-      component: () => import("../views/admin/CreateBlogPost.vue")
-    },
-    {
-      path: "/admin/blog/:blogPostId",
-      name: "adminPost",
-      meta: {
-        layout: AdminLayout,
-        auth: true,
-        admin: true
-      },
-      component: () => import("../views/admin/BlogPost.vue")
     },
     {
       path: "/admin/settings",
