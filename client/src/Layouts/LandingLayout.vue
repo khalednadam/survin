@@ -8,6 +8,7 @@ import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import Footer from "../views/landing/Footer.vue";
 import ColorChanger from "../components/ColorChanger.vue";
+import Logo from "../components/Logo.vue";
 const { mdAndUp } = useDisplay();
 
 const route = useRoute();
@@ -36,7 +37,7 @@ onUnmounted(() => {
     <v-container v-if="mdAndUp">
       <div class="flex w-full justify-between items-center">
         <div class="flex items-center justify-start gap-10">
-          <v-img :width="50" class="" src="/colored-logo.svg"> </v-img>
+          <Logo />
           <div class="flex gap-7 items-center">
             <div class="flex items-center">
               <!--   <router-link to="/home"> -->
