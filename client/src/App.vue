@@ -6,7 +6,8 @@ const theme = useTheme();
 </script>
 
 <template>
-  <v-app :theme="$route.path.includes('/home') ? 'light' : theme.current.value">
+  <v-app
+    :theme="$route.meta.layout?.__name === 'LandingLayout' || $route.meta.layout?.__name === 'SurveyLayout' ? 'light' : theme.current.value">
     <component :is="$route.meta.layout || 'div'">
       <RouterView :key="$route.fullPath" />
     </component>

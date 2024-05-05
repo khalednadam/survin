@@ -4,6 +4,7 @@ import { useCurrentUser } from "@/stores/auth";
 import Logo from "../components/Logo.vue";
 const authStore = useCurrentUser();
 
+
 onMounted(() => {
   authStore.getUser();
 });
@@ -23,7 +24,7 @@ onMounted(() => {
     </v-container>
   </v-app-bar>
   <v-container>
-    <v-main theme>
+    <v-main>
       <slot></slot>
     </v-main>
   </v-container>
