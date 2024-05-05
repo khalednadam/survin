@@ -9,12 +9,26 @@ const {
 const catchAsync = require("../utils/catchAsync");
 const { tokenTypes } = require("../config/tokens");
 const ApiError = require("../utils/ApiError");
+const { sendEmail } = require("../services/email.service");
 
 /**
  * register a user using createUser service
  */
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
+  const wlcmsg = `
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+  <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <h1 style="color: #333;">Welcome to Survin!</h1>
+<p style="color: #666; line-height: 1.6;">Hello ${user.name},</p>
+    <p style="color: #666; line-height: 1.6;">Welcome aboard! You've successfully signed up for Survin, your go-to platform for creating and managing surveys with ease.</p>
+    <p style="color: #666; line-height: 1.6;">Whether you're conducting market research, gathering customer feedback, or analyzing employee satisfaction, Survin has all the tools you need to make informed decisions based on valuable insights.</p>
+    <p style="color: #666; line-height: 1.6;">We're thrilled to have you join us on this journey!</p>
+    <p style="color: #666; line-height: 1.6;">Best regards,<br> The Survin Team</p>
+  </div>
+</body>
+`
+  await sendEmail(user.email, 'Welcome to Survin!', wlcmsg);
   res.status(httpStatus.CREATED).send({ user });
 });
 
