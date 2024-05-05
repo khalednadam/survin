@@ -37,7 +37,6 @@ const createResponse = async (responseBody) => {
       <h1 style="color: #333;">New Survey Response!</h1>
   <p style="color: #666; line-height: 1.6;">Hello ${survey.owner.name},</p>
   <p style="color: #666; line-height: 1.6;">You have received a new response on your survey "<strong>${survey.title}</strong>".</p>
-  $
       <p style="color: #666; line-height: 1.6;">To view the response click the button below:</p>
   <p style="color: #666; line-height: 1.6;"><a href="${baseURL}/responses/${survey._id}?response=${response._id}" style="display: inline-block; padding: 10px 20px; background-color: #213BAA; color: #fff; text-decoration: none; border-radius: 5px;">View Response</a></p>
       <p style="color: #666; line-height: 1.6;">Thank you for using Survin!</p>
