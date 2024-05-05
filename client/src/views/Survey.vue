@@ -46,6 +46,7 @@ const submit = async () => {
 }
 onMounted(async () => {
   await getSurveyById();
+  document.title = `${survey.value.title} Survey - Survin!`
 })
 
 

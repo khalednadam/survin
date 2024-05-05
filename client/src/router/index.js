@@ -18,6 +18,7 @@ const router = createRouter({
       path: "/",
       name: "main",
       meta: {
+        title: 'Dashboard - Survin',
         layout: AppLayout,
         auth: true,
       },
@@ -31,6 +32,7 @@ const router = createRouter({
         admin: false,
         layout: AppLayout,
         auth: true,
+        title: 'Settings - Survin',
       },
     },
     {
@@ -40,6 +42,7 @@ const router = createRouter({
       meta: {
         layout: AuthLayout,
         auth: false,
+        title: "Login - Survin",
       },
     },
     {
@@ -49,6 +52,7 @@ const router = createRouter({
       meta: {
         layout: AuthLayout,
         auth: false,
+        title: "Forgot password - Survin",
       },
     },
     {
@@ -58,6 +62,7 @@ const router = createRouter({
       meta: {
         layout: AuthLayout,
         auth: false,
+        title: "Forgot password - Survin",
       },
     },
     {
@@ -67,6 +72,7 @@ const router = createRouter({
       meta: {
         layout: AuthLayout,
         auth: false,
+        title: "Register - Survin",
       },
     },
     {
@@ -76,6 +82,7 @@ const router = createRouter({
       meta: {
         layout: LandingLayout,
         auth: false,
+        title: "Welcome to Survin!",
       },
     },
     {
@@ -85,7 +92,8 @@ const router = createRouter({
       meta: {
         layout: AppLayout,
         auth: true,
-        admin: false
+        admin: false,
+        title: "Create a survey - Survin",
       },
     },
     {
@@ -105,6 +113,7 @@ const router = createRouter({
         layout: AppLayout,
         auth: true,
         admin: false,
+        title: "Responses - Survin",
       },
       component: () => import("../views/Responses.vue"),
     },
@@ -140,6 +149,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  document.title = `${to.meta.title}`;
   try {
     await currentUserStore.getUser();
     const isAuth = !!currentUserStore.user.id;
