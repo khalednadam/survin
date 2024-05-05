@@ -2,6 +2,9 @@ const httpStatus = require("http-status");
 const { surveyService } = require(".");
 const { Response, Survey } = require("../models");
 const ApiError = require("../utils/ApiError");
+const { sendEmail } = require("./email.service");
+const { baseURL } = require("../config/config");
+const { response } = require("express");
 
 /**
  * Creates a new response for a survey.
@@ -26,9 +29,23 @@ const createResponse = async (responseBody) => {
       throw new ApiError(httpStatus.BAD_REQUEST, "Email is not valid");
     }
   })
-
   await Survey.findOneAndUpdate({ _id: survey._id.toString() }, { responsesCount: survey.responsesCount + 1 });
-  return Response.create(responseBody);
+  const response = await Response.create(responseBody);
+  await response.populate(['survey', 'user']);
+  const msg = `
+  <div style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+      <h1 style="color: #333;">New Survey Response!</h1>
+  <p style="color: #666; line-height: 1.6;">Hello ${survey.owner.name},</p>
+  <p style="color: #666; line-height: 1.6;">You have received a new response on your survey "<strong>${survey.title}</strong>".</p>
+  $
+      <p style="color: #666; line-height: 1.6;">To view the response click the button below:</p>
+  <p style="color: #666; line-height: 1.6;"><a href="${baseURL}/responses/${survey._id}?response=${response._id}" style="display: inline-block; padding: 10px 20px; background-color: #213BAA; color: #fff; text-decoration: none; border-radius: 5px;">View Response</a></p>
+      <p style="color: #666; line-height: 1.6;">Thank you for using Survin!</p>
+      <p style="color: #666; line-height: 1.6;">Best regards,<br> The Survin Team</p>
+    </div>
+  `
+  await sendEmail(survey.owner.email, `New response to ${survey.title}`, msg);
+  return response;
 }
 
 const getResponse = async (responseId) => {
