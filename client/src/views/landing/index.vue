@@ -34,6 +34,10 @@ let text = [
         <v-img src="/inapp.webp" rounded="lg" class="w-full"> </v-img>
       </div>
     </div>
+    <amp-ad width="100vw" height="320" type="adsense" data-ad-client="ca-pub-1681984016938400" data-ad-slot="2783266699"
+      data-auto-format="rspv" data-full-width="">
+      <div overflow=""></div>
+    </amp-ad>
     <div class="mt-10">
       <WhatIsSurvin />
     </div>
