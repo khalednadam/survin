@@ -32,6 +32,7 @@ const deleteAvatarDialog = ref(false);
 const isLoading = ref(false);
 const deleteAccountDialog = ref(false);
 const passwordForDeletion = ref("");
+const emailVerificationLoading = ref(false);
 
 const isDisabled = computed(() => {
   return password.value.length > 7 &&
@@ -67,7 +68,6 @@ const changePassword = () => {
       changePasswordDialog.value = false;
     })
     .catch((err) => {
-      console.log(err);
       toast.error("failed - check your current password and try again!");
     });
 };
@@ -124,7 +124,6 @@ const deleteAccount = () => {
       router.push("/login");
     })
     .catch((err) => {
-      console.log(err);
       toast.error("failed - check your password and try again!");
     })
     .finally(() => {
@@ -172,8 +171,7 @@ const deleteProfilePic = handleSubmit(() => {
       profilePic.value = null;
     })
     .catch((err) => {
-      toast.error("failed");
-      console.log(err);
+      toast.error("An error occurred")
     })
     .finally(() => {
       isLoading.value = false;
@@ -202,8 +200,7 @@ const updateProfilePic = handleSubmit(() => {
       profilePic.value = null;
     })
     .catch((err) => {
-      toast.error("failed");
-      console.log(err);
+      toast.error("An error occurred");
     })
     .finally(() => {
       isLoading.value = false;
@@ -235,13 +232,24 @@ const updateProfile = handleSubmit(() => {
       profilePic.value = null;
     })
     .catch((err) => {
-      toast.error("failed");
-      console.log(err);
+      toast.error("An error occurred");
     })
     .finally(() => {
       isLoading.value = false;
     });
 });
+
+const sendVerificationEmail = async () => {
+  emailVerificationLoading.value = true;
+  try {
+    await axiosInstance.post("/auth/send-verification-email");
+    toast.success("Verification email was sent");
+  } catch (err) {
+    toast.error("something went wrong!");
+  } finally {
+    emailVerificationLoading.value = false;
+  }
+};
 </script>
 
 <template>
@@ -290,7 +298,12 @@ const updateProfile = handleSubmit(() => {
           <p class="text-xl">Email</p>
         </v-col>
         <v-col md="8" cols="12">
-          <v-text-field v-model="email.value.value" :error-messages="email.errorMessage.value"></v-text-field>
+          <v-text-field readonly :disabled="authStore.user.isEmailVerified" v-model="email.value.value"
+            :error-messages="email.errorMessage.value"></v-text-field>
+          <v-btn :disabled="emailVerificationLoading" :loading="emailVerificationLoading" @click="sendVerificationEmail"
+            v-if="!authStore.user.isEmailVerified" color="primary" variant="flat">
+            Verify
+          </v-btn>
         </v-col>
       </v-row>
       <v-row class="items-center">

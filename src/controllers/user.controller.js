@@ -103,6 +103,7 @@ const updateUser = catchAsync(async (req, res) => {
     refreshToken: tokens.refresh.token,
     accessToken: tokens.access.token,
     profilePhotoUrl: user.profilePhotoUrl,
+    isEmailVerified: user.isEmailVerified
   };
   req.session.user = sessionUser;
   req.session.save();
@@ -181,6 +182,7 @@ const deleteProfilePic = catchAsync(async (req, res) => {
     refreshToken: tokens.refresh.token,
     accessToken: tokens.access.token,
     profilePhotoUrl: user.profilePhotoUrl,
+    isEmailVerified: user.isEmailVerified
   };
   req.session.user = sessionUser;
   req.session.save();

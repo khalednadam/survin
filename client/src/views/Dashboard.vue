@@ -1,7 +1,6 @@
 <script setup>
 import debounce from 'lodash.debounce'
 import { watch, onMounted, ref } from 'vue';
-import { toastError } from "../composables/helper";
 import axiosInstance from "../composables/axios";
 import SurveyCard from '../components/SurveyCard.vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -9,9 +8,11 @@ import { useSurveySearch } from "../stores/surveySearch.js"
 import { storeToRefs } from "pinia";
 import { Icon } from '@iconify/vue';
 import { useDisplay } from 'vuetify/lib/framework.mjs';
+import { useToast } from 'vue-toastification';
 
 const { mdAndUp } = useDisplay();
 const surveySearch = useSurveySearch();
+const toast = useToast();
 const { searchWord } = storeToRefs(surveySearch);
 const route = useRoute();
 const router = useRouter();
@@ -31,7 +32,7 @@ const getSurveys = async () => {
     });
     surveys.value = response.data;
   } catch (err) {
-    toastError(err);
+    toast.error("An error occurred")
   } finally {
     loading.value = false;
   }

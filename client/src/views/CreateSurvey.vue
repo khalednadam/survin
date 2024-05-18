@@ -44,7 +44,6 @@ const createSurvey = async () => {
     successDialog.value = true;
     link.value = `${import.meta.env.VITE_BASE_URL}/survey/${surveyId.value}`
   } catch (err) {
-    console.log(err);
     toast.error('Please fill all the fields')
   } finally {
     loading.value = false;

@@ -128,6 +128,14 @@ const router = createRouter({
       component: () => import('../views/admin/index.vue'),
     },
     {
+      path: "/verify-email",
+      name: "verify-email",
+      component: () => import("../views/VerifyEmail.vue"),
+      meta: {
+        auth: null
+      },
+    },
+    {
       path: "/admin/settings",
       name: "admin-settings",
       component: () => import("../views/Settings.vue"),

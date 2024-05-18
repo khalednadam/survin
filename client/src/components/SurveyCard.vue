@@ -6,6 +6,7 @@ import axiosInstance from '../composables/axios';
 import { useRouter } from 'vue-router';
 import DeleteModal from "../components/Modals/DeleteModal.vue"
 import { toastError } from '../composables/helper';
+import { useToast } from 'vue-toastification';
 
 const props = defineProps({
   id: String,
@@ -16,6 +17,7 @@ const props = defineProps({
 })
 
 const router = useRouter();
+const toast = useToast()
 
 const fullDateOptions = { year: 'numeric', month: 'numeric', day: 'numeric' };
 const link = ref(`${import.meta.env.VITE_BASE_URL}/survey/${props.id}`);
@@ -32,7 +34,6 @@ const toggleClosed = async () => {
     });
     router.go("/");
   } catch (err) {
-    toastError(err);
   } finally {
     loading.value = false;
   }
@@ -44,7 +45,7 @@ const deleteSurvey = async () => {
     await axiosInstance.delete(`/survey/${props.id}`);
     router.go("/");
   } catch (err) {
-    toastError(err);
+    toast.error("An error occurred");
   } finally {
     loading.value = false;
   }

@@ -5,10 +5,12 @@ import { onMounted, ref } from "vue";
 import Field from "../components/Field.vue"
 import { useCurrentUser } from "@/stores/auth";
 import { Icon } from "@iconify/vue";
-import { toastError } from "../composables/helper";
+import { useToast } from "vue-toastification";
+
 
 const route = useRoute();
 const authStore = useCurrentUser();
+const toast = useToast();
 
 const survey = ref(null);
 const loading = ref(false);
@@ -39,7 +41,7 @@ const submit = async () => {
     });
     sentDialog.value = true;
   } catch (err) {
-    toastError(err);
+    toast.error("Please fill all the required fields")
   } finally {
     submitting.value = false;
   }
