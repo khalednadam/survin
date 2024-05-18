@@ -43,7 +43,9 @@ const createResponse = async (responseBody) => {
       <p style="color: #666; line-height: 1.6;">Best regards,<br> The Survin Team</p>
     </div>
   `
-  await sendEmail(survey.owner.email, `New response to ${survey.title}`, msg);
+  if (survey.owner.isEmailVerified) {
+    await sendEmail(survey.owner.email, `New response to ${survey.title}`, msg);
+  }
   return response;
 }
 

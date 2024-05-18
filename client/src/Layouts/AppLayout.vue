@@ -66,6 +66,9 @@ onMounted(() => {
       <div class="mx-10">
         <slot></slot>
       </div>
+      <v-alert v-if="!authStore.user?.isEmailVerified" color="warning" icon="$warning" variant="elevated" border="start"
+        density="compact" class="w-[400px] !fixed bottom-2 right-2"
+        text="Your email is not verified. you will not recieve emails about your survey. please verify it from settings"></v-alert>
       <!-- </v-container> -->
     </v-main>
   </div>

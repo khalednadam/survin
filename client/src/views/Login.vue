@@ -63,7 +63,7 @@ const login = handleSubmit(async () => {
       router.push("/");
     })
     .catch((err) => {
-      toast.error("An error occurred")
+      toast.error("Incorrect email address and/or password.")
     })
     .finally(() => {
       isLoading.value = false;

@@ -11,10 +11,7 @@ export const useCurrentUser = defineStore("currentUser", () => {
   };
   async function getUser() {
     isLoading.value = true;
-    await axiosInstance(`/users/user`, {
-      method: "GET",
-      withCredentials: true,
-    })
+    await axiosInstance(`/users/user`)
       .then((res) => {
         user.value = res.data;
       })

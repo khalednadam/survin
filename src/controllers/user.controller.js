@@ -153,7 +153,7 @@ const deleteUser = catchAsync(async (req, res) => {
  * get currently logged in user from the session
  */
 const getCurrentUser = catchAsync(async (req, res) => {
-  const user = await userService.getUserById(req.session?.user?.id) || null;
+  const user = await userService.getUserById(req.session.user.id) || null;
   res.send(user);
 });
 
