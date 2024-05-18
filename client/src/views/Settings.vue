@@ -245,7 +245,7 @@ const sendVerificationEmail = async () => {
     await axiosInstance.post("/auth/send-verification-email");
     toast.success("Verification email was sent");
   } catch (err) {
-    toast.error("something went wrong!");
+    toast.error("Something went wrong!");
   } finally {
     emailVerificationLoading.value = false;
   }
@@ -298,10 +298,10 @@ const sendVerificationEmail = async () => {
           <p class="text-xl">Email</p>
         </v-col>
         <v-col md="8" cols="12">
-          <v-text-field readonly :disabled="authStore.user.isEmailVerified" v-model="email.value.value"
+          <v-text-field readonly :disabled="authStore.user?.isEmailVerified" v-model="email.value.value"
             :error-messages="email.errorMessage.value"></v-text-field>
           <v-btn :disabled="emailVerificationLoading" :loading="emailVerificationLoading" @click="sendVerificationEmail"
-            v-if="!authStore.user.isEmailVerified" color="primary" variant="flat">
+            v-if="!authStore.user?.isEmailVerified" color="primary" variant="flat">
             Verify
           </v-btn>
         </v-col>

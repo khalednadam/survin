@@ -40,7 +40,6 @@ router.post(
 
 router.post(
   "/send-verification-email",
-  auth(),
   authController.sendVerificationEmail,
 );
 
@@ -59,20 +58,4 @@ router.get(
     failureRedirect: "/auth/google/failure",
   }),
 );
-
-router.get(
-  "/google",
-  passport.authenticate(
-    "google",
-    { scope: ["email", "profile"] },
-    // passport.authenticate('google', { failureRedirect: '/login', scope: ['profile', 'email'] }),
-    //   function(req, res) {
-    //     // Successful authentication, redirect home.
-    //     // res.s
-    //     console.log("done");
-    //   }
-    // )
-  ),
-);
-
 module.exports = router;
