@@ -2,9 +2,8 @@
 import { Icon } from "@iconify/vue";
 import { useCurrentUser } from "../stores/auth";
 import { useRouter } from "vue-router";
-import axios from "axios";
 import axiosInstance from "../composables/axios";
-const VITE_SERVER_URL = import.meta.env.VITE_SERVER_URL;
+import { toastError } from "../composables/helper"
 
 const authStore = useCurrentUser();
 const router = useRouter();
@@ -20,7 +19,7 @@ const logout = () => {
       router.push("/home");
     })
     .catch((err) => {
-      console.log(err);
+      toastError(err);
     });
 };
 </script>

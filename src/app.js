@@ -10,6 +10,7 @@ const { User } = require("./models");
 const path = require("path");
 const app = express();
 const localStrategy = require("passport-local");
+const ApiError = require("./utils/ApiError");
 app.use(express.json());
 
 const corsOptions = {
@@ -52,6 +53,22 @@ const frontendPath = path.join(__dirname, "../client/dist/");
 app.use(express.static(frontendPath));
 app.get('/*', function(req, res) {
   res.sendFile(path.join(frontendPath));
+});
+
+app.use((err, req, res, next) => {
+  // If the error is an instance of ApiError, use its properties
+  if (err instanceof ApiError) {
+    return res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+    });
+  }
+
+  // For unexpected errors, log the error for further analysis
+  res.status(500).json({
+    status: 'error',
+    message: 'An unexpected error occurred!',
+  });
 });
 
 module.exports = app;

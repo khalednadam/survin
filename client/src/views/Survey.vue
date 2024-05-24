@@ -6,6 +6,7 @@ import Field from "../components/Field.vue"
 import { useCurrentUser } from "@/stores/auth";
 import { Icon } from "@iconify/vue";
 import { useToast } from "vue-toastification";
+import { toastError } from "../composables/helper.js"
 
 
 const route = useRoute();
@@ -25,7 +26,7 @@ const getSurveyById = async () => {
     survey.value = response.data;
     answers.value = survey.value.fields.map((field) => ({ fieldId: field._id, value: [] }));
   } catch (err) {
-    console.log(err)
+    toastError(err);
   } finally {
     loading.value = false;
   }
@@ -80,8 +81,8 @@ onMounted(async () => {
                 :label="field.label" :required="field.required" />
             </template>
           </div>
-          <v-btn @click="submit" :loading="submitting" :disabled="submitting" class="flex place-self-end" color="primary"
-            size="large">
+          <v-btn @click="submit" :loading="submitting" :disabled="submitting" class="flex place-self-end"
+            color="primary" size="large">
             Submit
           </v-btn>
         </div>
@@ -121,5 +122,3 @@ onMounted(async () => {
     </div>
   </v-theme-provider>
 </template>
-
-
