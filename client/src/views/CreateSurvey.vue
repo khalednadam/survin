@@ -44,7 +44,7 @@ const createSurvey = async () => {
     successDialog.value = true;
     link.value = `${import.meta.env.VITE_BASE_URL}/survey/${surveyId.value}`
   } catch (err) {
-    toast.error('Please fill all the fields')
+    toastError(err);
   } finally {
     loading.value = false;
   }
@@ -63,7 +63,7 @@ const createSurvey = async () => {
           <v-card-text class="mt-2">
             <v-text-field v-model="surveyTitle" label="Survey Title">
             </v-text-field>
-            <div class="my-2" v-click-outside="() => { }">
+            <div class="my-2">
               <p>
                 Fields
               </p>
